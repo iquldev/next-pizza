@@ -4,6 +4,7 @@ import type { Metadata } from "next"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { cn } from "@/lib/utils"
+import { Header } from "@/components/shared/header"
 
 const fontSans = Nunito({
   subsets: ["cyrillic"],
@@ -28,6 +29,7 @@ export default function RootLayout({
     >
       <body>
         <ThemeProvider>
+          <Header />
           <main className="min-h-screen">{children}</main>
         </ThemeProvider>
       </body>
