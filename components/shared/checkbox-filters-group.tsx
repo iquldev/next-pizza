@@ -3,6 +3,7 @@
 import { cn } from "@/lib/utils"
 import { FilterCheckbox, FilterCheckboxProps } from "./filter-checkbox"
 import { Input } from "../ui/input"
+import { Skeleton } from "../ui/skeleton"
 import { useState } from "react"
 
 type Item = FilterCheckboxProps
@@ -10,11 +11,14 @@ type Item = FilterCheckboxProps
 interface Props {
   title: string
   items: Item[]
-  defaultItems: Item[]
+  defaultItems?: Item[]
   limit?: number
   searchInputPlaceholder?: string
-  onChange?: (value: string) => void
+  onClickCheckbox?: (id: string) => void
   defaultValue?: string[]
+  loading?: boolean
+  selected?: Set<string>
+  name?: string
 
   className?: string
 }
@@ -22,12 +26,15 @@ interface Props {
 export const CheckboxFiltersGroup = ({
   title,
   items,
-  defaultItems,
+  defaultItems = items,
   limit = 5,
   searchInputPlaceholder = "Поиск...",
-  onChange,
+  loading,
+  onClickCheckbox,
   defaultValue,
+  selected: selectedIds,
   className,
+  name,
 }: Props) => {
   const [showAll, setShowAll] = useState(false)
   const [searchValue, setSearchValue] = useState("")
@@ -36,7 +43,23 @@ export const CheckboxFiltersGroup = ({
     ? items.filter((item) =>
         item.text.toLowerCase().includes(searchValue.toLowerCase())
       )
-    : defaultItems
+    : defaultItems.slice(0, limit)
+
+  if (loading) {
+    return (
+      <div className={className}>
+        <p className="mb-3 font-bold">{title}</p>
+
+        {...Array(limit)
+          .fill(0)
+          .map((_, index) => (
+            <Skeleton key={index} className="mb-4 h-6 rounded-[8px]" />
+          ))}
+
+        <Skeleton className="mb-4 h-6 w-28 rounded-[8px]" />
+      </div>
+    )
+  }
 
   const onChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value)
@@ -62,9 +85,10 @@ export const CheckboxFiltersGroup = ({
             key={String(item.value)}
             text={item.text}
             value={item.value}
-            onCheckedChange={() => {}}
             endAdornment={item.endAdornment}
-            checked={false}
+            checked={selectedIds?.has(item.value)}
+            onCheckedChange={() => onClickCheckbox?.(item.value)}
+            name={name}
           />
         ))}
       </div>
@@ -75,6 +99,7 @@ export const CheckboxFiltersGroup = ({
         >
           <button
             onClick={() => setShowAll(!showAll)}
+            type="button"
             className="mt-3 text-primary"
           >
             {showAll ? "Скрыть" : "+ Показать все"}
