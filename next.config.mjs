@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["media.dodostatic.net"],
+    domains: ["media.dodostatic.net", "cdn.dodostatic.net"],
   },
 }
 

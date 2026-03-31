@@ -1,0 +1,34 @@
+"use client"
+
+import { cn } from "@/shared/lib/utils"
+import { useCategoryStore } from "@/shared/store/category"
+import { Category } from "@prisma/client"
+
+interface Props {
+  className?: string
+  categories: Category[]
+}
+
+export const Categories = ({ className, categories }: Props) => {
+  const activeCategoryId = useCategoryStore((state) => state.activeId)
+  return (
+    <div
+      className={cn("inline-flex gap-1 rounded-2xl bg-gray-50 p-1", className)}
+    >
+      {categories.map((cat) => (
+        <a
+          key={cat.id}
+          href={`#${cat.name.toLowerCase().replace(/\s+/g, "-")}`}
+          className={cn(
+            "flex h-11 items-center rounded-2xl px-5 font-bold",
+            activeCategoryId === cat.id
+              ? "bg-white text-primary shadow-md shadow-gray-100"
+              : ""
+          )}
+        >
+          {cat.name}
+        </a>
+      ))}
+    </div>
+  )
+}
