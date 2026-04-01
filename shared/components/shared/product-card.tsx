@@ -1,4 +1,4 @@
-import { cn } from "@/shared/lib/utils"
+import { cn } from "@/shared/lib"
 import Image from "next/image"
 import Link from "next/link"
 import { Title } from "./title"

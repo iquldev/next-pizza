@@ -1,6 +1,6 @@
 "use client"
 
-import { cn } from "@/shared/lib/utils"
+import { cn } from "@/shared/lib"
 import { Title } from "./title"
 import { Input } from "../ui/input"
 import { RangeSlider } from "./range-slider"

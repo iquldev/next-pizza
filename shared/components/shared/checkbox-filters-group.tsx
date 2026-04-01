@@ -1,6 +1,6 @@
 "use client"
 
-import { cn } from "@/shared/lib/utils"
+import { cn } from "@/shared/lib"
 import { FilterCheckbox, FilterCheckboxProps } from "./filter-checkbox"
 import { Input } from "../ui/input"
 import { Skeleton } from "../ui/skeleton"

@@ -1,4 +1,4 @@
-import { cn } from "@/shared/lib/utils"
+import { cn } from "@/shared/lib"
 import { Container } from "./container"
 import Image from "next/image"
 import Link from "next/link"

@@ -1,23 +1,16 @@
 "use client"
 
-import { cn } from "@/shared/lib/utils"
+import { cn, usePizzaDetails } from "@/shared/lib"
 import { Button } from "../ui"
 import { Title } from "./title"
 import { ProductImage } from "./product-image"
 import { Ingredient, ProductItem } from "@prisma/client"
 import { GroupVariants } from "./group-variants"
-import {
-  PIZZA_SIZES,
-  PIZZA_TYPES,
-  PizzaSize,
-  PizzaType,
-} from "@/shared/constants/pizza"
+import { PizzaSize, PizzaType } from "@/shared/constants/pizza"
 import { VisuallyHidden } from "radix-ui"
 import { DialogTitle } from "../ui/dialog"
-import { useState } from "react"
 import { IngredientItem } from "./ingredient-item"
-import { useSet } from "react-use"
-import { mapPizzaType } from "@/shared/constants/pizza"
+import { usePizzaOptions } from "@/shared/hooks"
 
 interface Props {
   imageUrl: string
@@ -37,43 +30,25 @@ export const ChoosePizzaForm = ({
   className,
   onAddToCart,
 }: Props) => {
-  const [size, setSize] = useState<PizzaSize>(items[0].size as PizzaSize)
-  const [type, setType] = useState<PizzaType>(items[0].pizzaType as PizzaType)
+  const {
+    size,
+    type,
+    selectedIngredients,
+    availableSizes,
+    availableTypes,
+    currentPizza,
+    setSize,
+    setType,
+    addIngredient,
+  } = usePizzaOptions(items)
 
-  const [selectedIngredients, { toggle: addIngredient }] = useSet(
-    new Set<number>([])
-  )
-
-  const availableSizes = PIZZA_SIZES.map((item) => ({
-    ...item,
-    disabled: !items.some(
-      (pizza) => pizza.pizzaType === type && pizza.size === Number(item.value)
-    ),
-  }))
-
-  const availableTypes = PIZZA_TYPES.map((item) => ({
-    ...item,
-    disabled: !items.some(
-      (pizza) =>
-        pizza.pizzaType === Number(item.value) && pizza.size === Number(size)
-    ),
-  }))
-
-  const currentPizza = items.find(
-    (item) => item.pizzaType === type && item.size === size
-  )
-  const pizzaPrice = currentPizza?.price || 0
-
-  const ingredientPrice = ingredients.reduce((acc, ingredient) => {
-    if (selectedIngredients.has(ingredient.id)) {
-      return acc + ingredient.price
-    }
-    return acc
-  }, 0)
-
-  const totalPrice = pizzaPrice + ingredientPrice
-
-  const textDetaills = `${size} см, ${mapPizzaType[type].toLowerCase()} тесто`
+  const { totalPrice, textDetaills } = usePizzaDetails({
+    items,
+    ingredients,
+    selectedIngredients,
+    type,
+    size,
+  })
 
   return (
     <div className={cn(className, "flex flex-1")}>

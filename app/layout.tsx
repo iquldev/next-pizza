@@ -2,7 +2,7 @@ import { Nunito } from "next/font/google"
 
 import "@/app/globals.css"
 import { ThemeProvider } from "@/shared/components/theme-provider"
-import { cn } from "@/shared/lib/utils"
+import { cn } from "@/shared/lib"
 
 const fontSans = Nunito({
   subsets: ["cyrillic"],

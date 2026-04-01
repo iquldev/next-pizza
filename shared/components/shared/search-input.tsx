@@ -1,6 +1,6 @@
 "use client"
 
-import { cn } from "@/shared/lib/utils"
+import { cn } from "@/shared/lib"
 import { Search } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
