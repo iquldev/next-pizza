@@ -1,6 +1,6 @@
 "use client"
 
-import { Dialog, DialogContent } from "@/shared/components/ui/dialog"
+import { Dialog, DialogContent, DialogTitle } from "@/shared/components/ui/dialog"
 import { cn } from "@/shared/lib"
 import { useRouter } from "next/navigation"
 import { ChooseProductForm } from "../choose-product-form"
@@ -32,6 +32,7 @@ export const ChooseProductModal = ({ product, className }: Props) => {
           className
         )}
       >
+        <DialogTitle className="sr-only">{product.name}</DialogTitle>
         {isPizzaForm ? (
           <ChoosePizzaForm
             imageUrl={product.imageUrl}
