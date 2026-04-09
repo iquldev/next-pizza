@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 
-import "@/app/globals.css"
+import "../globals.css"
 import { ThemeProvider } from "@/shared/components/theme-provider"
 import { Header } from "@/shared/components/shared/header"
 

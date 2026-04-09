@@ -100,7 +100,7 @@ export const CheckboxFiltersGroup = ({
           <button
             onClick={() => setShowAll(!showAll)}
             type="button"
-            className="mt-3 text-primary"
+            className="mt-3 cursor-pointer text-primary"
           >
             {showAll ? "Скрыть" : "+ Показать все"}
           </button>

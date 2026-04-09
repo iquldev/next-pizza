@@ -82,6 +82,7 @@ export const Filters = ({ className }: Props) => {
           step={10}
           value={[filters.prices.priceFrom || 0, filters.prices.priceTo || 200]}
           onValueChange={updatePrices}
+          className="cursor-pointer"
         />
       </div>
 

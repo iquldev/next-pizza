@@ -51,8 +51,6 @@ export default async function ProductPage({ params }: Props) {
             className="mb-1 font-extrabold"
           />
 
-          <p className="text-gray-400">{product.details || "Нет описания"}</p>
-
           <GroupVariants
             value="2"
             items={[

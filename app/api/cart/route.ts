@@ -1,4 +1,7 @@
 import { prisma } from "@/prisma/prisma-client"
+import { findOrCreateCart } from "@/shared/lib/find-or-create-cart"
+import { updateCartTotalAmount } from "@/shared/lib/update-cart-total-amount"
+import { CreateCartItemValues } from "@/shared/services/dto/cart.dto"
 import { NextRequest, NextResponse } from "next/server"
 
 export async function GET(req: NextRequest) {
@@ -33,5 +36,74 @@ export async function GET(req: NextRequest) {
     return NextResponse.json(userCart)
   } catch (error) {
     console.log(error)
+  }
+}
+
+export async function POST(req: NextRequest) {
+  try {
+    const token = req.cookies.get("cartToken")?.value
+
+    if (!token) {
+      const newToken = crypto.randomUUID()
+      return NextResponse.json({ token: newToken })
+    }
+
+    const userCart = await findOrCreateCart(token)
+
+    const data = (await req.json()) as CreateCartItemValues
+
+    const findCartItem = await prisma.cartItem.findFirst({
+      where: {
+        cartId: userCart.id,
+        productItemId: data.productItemId,
+        ingredients: {
+          every: {
+            id: {
+              in: data.ingredientsIds,
+            },
+          },
+        },
+      },
+    })
+
+    if (findCartItem) {
+      await prisma.cartItem.update({
+        where: {
+          id: findCartItem.id,
+        },
+        data: {
+          quantity: findCartItem.quantity + 1,
+        },
+      })
+
+      const updatedUserCart = await updateCartTotalAmount(token)
+
+      const resp = NextResponse.json(updatedUserCart)
+
+      resp.cookies.set("cartToken", token)
+
+      return resp
+    } else {
+      await prisma.cartItem.create({
+        data: {
+          cartId: userCart.id,
+          productItemId: data.productItemId,
+          quantity: 1,
+          ingredients: {
+            connect: data.ingredientsIds?.map((id) => ({ id })),
+          },
+        },
+      })
+
+      const updatedUserCart = await updateCartTotalAmount(token)
+
+      return NextResponse.json(updatedUserCart)
+    }
+  } catch (error) {
+    console.log(error)
+    return NextResponse.json(
+      { message: "Failed to create cart token" },
+      { status: 500 }
+    )
   }
 }

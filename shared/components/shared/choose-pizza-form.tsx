@@ -19,7 +19,7 @@ interface Props {
   items: ProductItem[]
   loading?: boolean
   className?: string
-  onAddToCart: (item: ProductItem) => void
+  onAddToCart: (itemId: number, ingredientsIds: number[]) => void
 }
 export const ChoosePizzaForm = ({
   imageUrl,
@@ -100,7 +100,9 @@ export const ChoosePizzaForm = ({
         <Button
           loading={loading}
           className="mt-10 h-[55px] w-full rounded-[18px] px-10 text-base"
-          onClick={() => onAddToCart(currentPizza!)}
+          onClick={() =>
+            onAddToCart(currentPizza!.id, Array.from(selectedIngredients))
+          }
         >
           Добавить в корзину за {totalPrice} $
         </Button>

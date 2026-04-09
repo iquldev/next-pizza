@@ -22,7 +22,7 @@ export const ProductCard = ({
 }: Props) => {
   return (
     <div className={cn("", className)}>
-      <Link href={`/product/${id}`}>
+      <Link href={`/product/${id}`} prefetch={true}>
         <div className="flex h-[260px] justify-center rounded-lg bg-secondary p-6">
           <Image width={215} height={215} src={imageUrl} alt={name} />
         </div>

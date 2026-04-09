@@ -31,13 +31,30 @@ export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({
   children,
   className,
 }) => {
-  const { fetchCartItems, items, totalAmount } = useCartStore()
+  const {
+    fetchCartItems,
+    items,
+    totalAmount,
+    updateItemQuantity,
+    removeCartItem,
+  } = useCartStore()
 
   useEffect(() => {
     fetchCartItems()
   }, [fetchCartItems])
 
   const [redirecting, setRedirecting] = useState(false)
+
+  const onClickCountButton = (
+    id: number,
+    quantity: number,
+    type: "plus" | "minus"
+  ) => {
+    const newQuantity = type === "plus" ? quantity + 1 : quantity - 1
+
+    updateItemQuantity(id, newQuantity)
+  }
+
   return (
     <div className={cn("", className)}>
       <Sheet>
@@ -102,14 +119,13 @@ export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({
                           item.pizzaSize as PizzaSize,
                           item.ingredients
                         )}
-                        // disabled={item.disabled}
                         name={item.name}
                         price={item.price}
                         quantity={item.quantity}
-                        // onClickCountButton={(type) =>
-                        //   onClickCountButton(item.id, item.quantity, type)
-                        // }
-                        // onClickRemove={() => removeCartItem(item.id)}
+                        onClickCountButton={(type) =>
+                          onClickCountButton(item.id, item.quantity, type)
+                        }
+                        onClickRemove={() => removeCartItem(item.id)}
                       />
                     </div>
                   ))}

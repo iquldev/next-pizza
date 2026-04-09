@@ -1,3 +1,4 @@
+import { Suspense } from "react"
 import {
   Container,
   Title,
@@ -32,7 +33,9 @@ export default async function Page() {
       <Container className="mt-10 pb-14">
         <div className="flex gap-[80px]">
           <div className="w-[250px]">
-            <Filters></Filters>
+            <Suspense fallback={<div>Загрузка фильтров...</div>}>
+              <Filters />
+            </Suspense>
           </div>
 
           <div className="flex-1">
