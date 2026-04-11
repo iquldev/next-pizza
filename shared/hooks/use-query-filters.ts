@@ -12,6 +12,7 @@ export const useQueryFilters = (filters: Filters) => {
       pizzaTypes: Array.from(filters.pizzaTypes),
       sizes: Array.from(filters.sizes),
       ingredients: Array.from(filters.selectedIngredients),
+      sortBy: filters.sortBy,
     }
 
     const queryString = qs.stringify(params, {
@@ -24,6 +25,7 @@ export const useQueryFilters = (filters: Filters) => {
     filters.prices,
     filters.selectedIngredients,
     filters.sizes,
+    filters.sortBy,
     router,
   ])
 }

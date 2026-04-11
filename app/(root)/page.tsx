@@ -6,19 +6,15 @@ import {
   Filters,
   ProductsGroupList,
 } from "@/shared/components/shared"
-import { prisma } from "@/prisma/prisma-client"
+import { Skeleton } from "@/shared/components/ui"
+import { getPizzas, GetSearchParams } from "@/shared/lib/find-pizzas"
 
-export default async function Page() {
-  const categories = await prisma.category.findMany({
-    include: {
-      products: {
-        include: {
-          items: true,
-          ingredients: true,
-        },
-      },
-    },
-  })
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: Promise<GetSearchParams>
+}) {
+  const categories = await getPizzas(searchParams)
 
   return (
     <>
@@ -33,7 +29,17 @@ export default async function Page() {
       <Container className="mt-10 pb-14">
         <div className="flex gap-[80px]">
           <div className="w-[250px]">
-            <Suspense fallback={<div>Загрузка фильтров...</div>}>
+            <Suspense
+              fallback={
+                <div>
+                  {Array.from({ length: 5 }).map((_, index) => (
+                    <Skeleton key={index} className="mb-4 h-6 rounded-[8px]" />
+                  ))}
+
+                  <Skeleton className="mb-4 h-6 w-28 rounded-[8px]" />
+                </div>
+              }
+            >
               <Filters />
             </Suspense>
           </div>

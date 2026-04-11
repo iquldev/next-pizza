@@ -19,7 +19,7 @@ interface ReturnProps {
 }
 
 export const getCartDetails = (data: CartDTO): ReturnProps => {
-  const items = data.items.map((item) => {
+  const items = (data.items || []).map((item) => {
     const totalPrice = calcCartItemTotalAmount(item)
     return {
       id: item.id,

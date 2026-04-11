@@ -11,6 +11,7 @@ interface QueryFilters extends PriceProps {
   pizzaTypes: string
   sizes: string
   ingredients: string
+  sortBy: string
 }
 
 export interface Filters {
@@ -18,6 +19,7 @@ export interface Filters {
   pizzaTypes: Set<string>
   sizes: Set<string>
   prices: PriceProps
+  sortBy: string
 }
 
 interface ReturnProps extends Filters {
@@ -26,6 +28,7 @@ interface ReturnProps extends Filters {
   setPizzaTypes: (value: string) => void
   setSizes: (value: string) => void
   setPrices: (name: keyof PriceProps, value: number) => void
+  setSortBy: (value: string) => void
 }
 
 export const useFilters = (): ReturnProps => {
@@ -50,6 +53,10 @@ export const useFilters = (): ReturnProps => {
     priceTo: Number(searchParams.get("priceTo")) || undefined,
   })
 
+  const [sortBy, setSortBy] = useState<string>(
+    searchParams.get("sortBy") || "rating"
+  )
+
   const updatePrice = (name: keyof PriceProps, value: number) => {
     setPrices((prev) => ({
       ...prev,
@@ -63,9 +70,11 @@ export const useFilters = (): ReturnProps => {
     setPizzaTypes: togglePizzaTypes,
     setSizes: toggleSizes,
     setPrices: updatePrice,
+    setSortBy,
     prices,
     selectedIngredients,
     pizzaTypes: selectedPizzaTypes,
     sizes: selectedSizes,
+    sortBy,
   }
 }

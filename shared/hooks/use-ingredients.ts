@@ -1,29 +1,14 @@
-import { Api } from "@/shared/services/api-client"
-import { Ingredient } from "@prisma/client"
-import { useEffect, useState } from "react"
+import useSWR from "swr"
+import { Api } from "../services/api-client"
 
 export const useIngredients = () => {
-  const [ingredients, setIngredients] = useState<Ingredient[]>([])
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    async function getIngredients() {
-      try {
-        setLoading(true)
-        const data = await Api.Ingredients.getAll()
-        setIngredients(data)
-      } catch (error) {
-        console.error(error)
-      } finally {
-        setLoading(false)
-      }
+  const { data, error, isLoading } = useSWR(
+    "ingredients",
+    Api.Ingredients.getAll,
+    {
+      revalidateOnFocus: false,
     }
+  )
 
-    getIngredients()
-  }, [])
-
-  return {
-    ingredients,
-    loading,
-  }
+  return { ingredients: data || [], error, loading: isLoading }
 }

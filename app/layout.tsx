@@ -3,6 +3,7 @@ import { Nunito } from "next/font/google"
 import "@/app/globals.css"
 import { ThemeProvider } from "@/shared/components/theme-provider"
 import { cn } from "@/shared/lib"
+import { Toaster } from "@/shared/components/ui/sonner"
 
 const fontSans = Nunito({
   subsets: ["cyrillic"],
@@ -26,7 +27,10 @@ export default function RootLayout({
       </head>
 
       <body>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <Toaster />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   )
