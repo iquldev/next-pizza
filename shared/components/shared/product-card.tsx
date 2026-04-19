@@ -10,6 +10,7 @@ interface Props {
   name: string
   price: number
   imageUrl: string
+  description: string
   id: string
 }
 
@@ -18,6 +19,7 @@ export const ProductCard = ({
   name,
   price,
   imageUrl,
+  description,
   id,
 }: Props) => {
   return (
@@ -29,9 +31,7 @@ export const ProductCard = ({
 
         <Title text={name} size="sm" className="mt-3 mb-1 font-bold" />
 
-        <p className="text-sm text-gray-400">
-          Цыпленок, грибы, томаты, моцарелла, соус барбекю
-        </p>
+        <p className="text-sm text-gray-400">{description}</p>
 
         <div className="mt-4 flex items-center justify-between">
           <span className="text-[20px]">

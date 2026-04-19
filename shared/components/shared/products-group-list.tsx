@@ -6,10 +6,11 @@ import { Title } from "./title"
 import { useIntersection } from "react-use"
 import { useRef, useEffect, type RefObject } from "react"
 import { useCategoryStore } from "@/shared/store/category"
+import { ProductWithRelations } from "@/@types/prisma"
 
 interface Props {
   title: string
-  items: any[]
+  items: ProductWithRelations[]
   categoryId: number
   className?: string
   listClassName?: string
@@ -48,9 +49,12 @@ export const ProductsGroupList = ({
         {items.map((product) => (
           <ProductCard
             key={product.id}
-            id={product.id}
+            id={String(product.id)}
             name={product.name}
             imageUrl={product.imageUrl}
+            description={product.ingredients
+              .map((ingredient) => ingredient.name)
+              .join(", ")}
             price={product.items[0].price}
           />
         ))}

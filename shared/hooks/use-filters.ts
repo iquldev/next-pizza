@@ -1,6 +1,6 @@
 import { useSearchParams } from "next/navigation"
 import { useSet } from "react-use"
-import { useState } from "react"
+import { useCallback, useMemo, useState } from "react"
 
 interface PriceProps {
   priceFrom?: number
@@ -57,24 +57,37 @@ export const useFilters = (): ReturnProps => {
     searchParams.get("sortBy") || "rating"
   )
 
-  const updatePrice = (name: keyof PriceProps, value: number) => {
+  const updatePrice = useCallback((name: keyof PriceProps, value: number) => {
     setPrices((prev) => ({
       ...prev,
       [name]: value,
     }))
-  }
+  }, [])
 
-  return {
-    setIngredients: toggleIngredients,
-    setSelectedIngredients: toggleIngredients,
-    setPizzaTypes: togglePizzaTypes,
-    setSizes: toggleSizes,
-    setPrices: updatePrice,
-    setSortBy,
-    prices,
-    selectedIngredients,
-    pizzaTypes: selectedPizzaTypes,
-    sizes: selectedSizes,
-    sortBy,
-  }
+  return useMemo(
+    () => ({
+      setIngredients: toggleIngredients,
+      setSelectedIngredients: toggleIngredients,
+      setPizzaTypes: togglePizzaTypes,
+      setSizes: toggleSizes,
+      setPrices: updatePrice,
+      setSortBy,
+      prices,
+      selectedIngredients,
+      pizzaTypes: selectedPizzaTypes,
+      sizes: selectedSizes,
+      sortBy,
+    }),
+    [
+      prices,
+      selectedPizzaTypes,
+      selectedSizes,
+      selectedIngredients,
+      sortBy,
+      toggleIngredients,
+      togglePizzaTypes,
+      toggleSizes,
+      updatePrice,
+    ]
+  )
 }
