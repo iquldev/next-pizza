@@ -12,8 +12,16 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    "prisma/**",
+    "**/*.generated.ts",
+    "node_modules/**",
   ]),
-  { rules: { "@typescript-eslint/no-explicit-any": "off" } },
+  {
+    rules: {
+      "@typescript-eslint/no-explicit-any": "off",
+      "@next/next/no-html-link-for-pages": "off",
+    },
+  },
 ])
 
 export default eslintConfig

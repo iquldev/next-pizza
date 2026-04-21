@@ -24,10 +24,8 @@ export const CartDrawerItem = ({
   return (
     <div
       className={cn(
-        "flex gap-6 bg-white p-5",
-        {
-          "pointer-events-none opacity-50": disabled,
-        },
+        "flex gap-4 bg-background px-6 py-4",
+        { "pointer-events-none opacity-50": disabled },
         className
       )}
     >
@@ -36,7 +34,7 @@ export const CartDrawerItem = ({
       <div className="flex-1">
         <CartItem.Info name={name} details={details} />
 
-        <hr className="my-3" />
+        <hr className="my-3 border-t border-t-border" />
 
         <div className="flex items-center justify-between">
           <CountButton onClick={onClickCountButton} value={quantity} />
@@ -45,7 +43,7 @@ export const CartDrawerItem = ({
             <CartItem.Price value={price} />
             <Trash2Icon
               onClick={onClickRemove}
-              className="cursor-pointer text-gray-400 hover:text-gray-600"
+              className="cursor-pointer text-muted-foreground hover:text-foreground"
               size={16}
             />
           </div>

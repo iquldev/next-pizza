@@ -1,0 +1,60 @@
+{
+  "Common": {
+    "back": "Back",
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "add": "Add",
+    "select": "Select",
+    "total": "Total",
+    "priceFrom": "from <bold>${price}</bold>",
+    "currency": "$"
+  },
+  "Filters": {
+    "title": "Filters",
+    "priceRange": "Price Range:",
+    "ingredients": "Ingredients",
+    "doughType": "Dough Type",
+    "sizesTitle": "Sizes",
+    "thin": "Thin",
+    "traditional": "Traditional",
+    "sizeCm": "{cm} cm",
+    "reset": "Reset Filters",
+    "showAll": "+ Show all",
+    "hide": "Hide",
+    "searchPlaceholder": "Search...",
+    "pizzaDescription": "{size} cm, {type} dough"
+  },
+  "Header": {
+    "slogan": "the best pizza in the world",
+    "searchPlaceholder": "Find pizza...",
+    "login": "Login",
+    "cart": "Cart"
+  },
+  "Cart": {
+    "title": "Cart",
+    "emptyTitle": "Cart is empty",
+    "emptyText": "Add at least one pizza to place an order",
+    "addToCart": "Add to cart for",
+    "checkout": "Checkout",
+    "itemsCount": "{count, plural, one {# item} other {# items}}",
+    "toastSuccess": "Product {name} added to cart",
+    "toastError": "Error adding product to cart",
+    "inCart": "In cart"
+  },
+  "Product": {
+    "addedToCart": "Product {name} added to cart",
+    "errorAdding": "Error adding to cart"
+  },
+  "Home": {
+    "allPizzas": "All pizzas"
+  },
+  "Sort": {
+    "title": "Sort by:",
+    "rating": "Popularity",
+    "priceAsc": "Price: low to high",
+    "priceDesc": "Price: high to low"
+  },
+  "Theme": {
+    "toggle": "Toggle theme"
+  }
+}

@@ -5,6 +5,8 @@ import { FilterCheckbox, FilterCheckboxProps } from "./filter-checkbox"
 import { Input } from "../ui/input"
 import { Skeleton } from "../ui/skeleton"
 import { useState } from "react"
+import { motion, LayoutGroup } from "framer-motion"
+import { useTranslations } from "next-intl"
 
 type Item = FilterCheckboxProps
 
@@ -28,13 +30,14 @@ export const CheckboxFiltersGroup = ({
   items,
   defaultItems = items,
   limit = 5,
-  searchInputPlaceholder = "Поиск...",
+  searchInputPlaceholder,
   loading,
   onClickCheckbox,
   selected: selectedIds,
   className,
   name,
 }: Props) => {
+  const t = useTranslations("Filters")
   const [showAll, setShowAll] = useState(false)
   const [searchValue, setSearchValue] = useState("")
 
@@ -70,36 +73,48 @@ export const CheckboxFiltersGroup = ({
         <div className="mb-5">
           <Input
             onChange={onChangeSearch}
-            placeholder={searchInputPlaceholder}
-            className="border-none bg-gray-50"
+            placeholder={searchInputPlaceholder || t("searchPlaceholder")}
+            className="border-none bg-muted"
           />
         </div>
       ) : null}
 
-      <div className="scrollbar flex max-h-96 flex-col gap-4 overflow-auto pr-2">
-        {list.map((item) => (
-          <FilterCheckbox
-            key={String(item.value)}
-            text={item.text}
-            value={item.value}
-            endAdornment={item.endAdornment}
-            checked={selectedIds?.has(item.value)}
-            onCheckedChange={() => onClickCheckbox?.(item.value)}
-            name={name}
-          />
-        ))}
-      </div>
+      <LayoutGroup>
+        <div className="scrollbar flex max-h-96 flex-col gap-4 overflow-auto pr-2">
+          {list.map((item) => (
+            <motion.div
+              layout
+              key={String(item.value)}
+              transition={{
+                type: "spring",
+                stiffness: 500,
+                damping: 40,
+                mass: 1,
+              }}
+            >
+              <FilterCheckbox
+                text={item.text}
+                value={item.value}
+                endAdornment={item.endAdornment}
+                checked={selectedIds?.has(item.value)}
+                onCheckedChange={() => onClickCheckbox?.(item.value)}
+                name={name}
+              />
+            </motion.div>
+          ))}
+        </div>
+      </LayoutGroup>
 
       {items.length > defaultItems.length && (
         <div
-          className={showAll ? "mt-4 border-t border-t-neutral-100 pt-4" : ""}
+          className={showAll ? "mt-4 border-t border-t-border pt-4" : ""}
         >
           <button
             onClick={() => setShowAll(!showAll)}
             type="button"
             className="mt-3 cursor-pointer text-primary"
           >
-            {showAll ? "Скрыть" : "+ Показать все"}
+            {showAll ? t("hide") : t("showAll")}
           </button>
         </div>
       )}

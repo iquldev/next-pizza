@@ -1,8 +1,8 @@
 import { useMemo } from "react"
 import { calcTotalPizzaPrice } from "./calc-total-pizza-price"
-import { mapPizzaType } from "../constants/pizza"
 import { Ingredient, ProductItem } from "@prisma/client"
 import { PizzaSize, PizzaType } from "../constants/pizza"
+import { useTranslations } from "next-intl"
 
 interface Props {
   items: ProductItem[]
@@ -19,6 +19,8 @@ export const usePizzaDetails = ({
   type,
   size,
 }: Props) => {
+  const t = useTranslations("Filters")
+
   const totalPrice = useMemo(() => {
     return calcTotalPizzaPrice(
       items,
@@ -29,7 +31,11 @@ export const usePizzaDetails = ({
     )
   }, [items, ingredients, selectedIngredients, type, size])
 
-  const textDetaills = `${size} см, ${mapPizzaType[type].toLowerCase()} тесто`
+  const typeName = type === 1 ? t("traditional") : t("thin")
+  const textDetaills = t("pizzaDescription", {
+    size,
+    type: typeName.toLowerCase(),
+  })
 
   return {
     totalPrice,

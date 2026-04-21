@@ -7,13 +7,6 @@ interface PriceProps {
   priceTo?: number
 }
 
-interface QueryFilters extends PriceProps {
-  pizzaTypes: string
-  sizes: string
-  ingredients: string
-  sortBy: string
-}
-
 export interface Filters {
   selectedIngredients: Set<string>
   pizzaTypes: Set<string>
@@ -24,33 +17,37 @@ export interface Filters {
 
 interface ReturnProps extends Filters {
   setIngredients: (value: string) => void
-  setSelectedIngredients: (value: string) => void
   setPizzaTypes: (value: string) => void
   setSizes: (value: string) => void
   setPrices: (name: keyof PriceProps, value: number) => void
   setSortBy: (value: string) => void
+  resetFilters: () => void
 }
 
 export const useFilters = (): ReturnProps => {
-  const searchParams = useSearchParams() as unknown as Map<
-    keyof QueryFilters,
-    string
-  >
+  const searchParams = useSearchParams()
 
-  const [selectedIngredients, { toggle: toggleIngredients }] = useSet(
-    new Set<string>(searchParams.get("ingredients")?.split(",") || [])
-  )
+  const [
+    selectedIngredients,
+    { toggle: toggleIngredients, clear: clearIngredients },
+  ] = useSet(new Set<string>(searchParams.get("ingredients")?.split(",") || []))
 
-  const [selectedPizzaTypes, { toggle: togglePizzaTypes }] = useSet(
-    new Set<string>(searchParams.get("pizzaTypes")?.split(",") || [])
-  )
-  const [selectedSizes, { toggle: toggleSizes }] = useSet(
+  const [
+    selectedPizzaTypes,
+    { toggle: togglePizzaTypes, clear: clearPizzaTypes },
+  ] = useSet(new Set<string>(searchParams.get("pizzaTypes")?.split(",") || []))
+
+  const [selectedSizes, { toggle: toggleSizes, clear: clearSizes }] = useSet(
     new Set<string>(searchParams.get("sizes")?.split(",") || [])
   )
 
   const [prices, setPrices] = useState<PriceProps>({
-    priceFrom: Number(searchParams.get("priceFrom")) || undefined,
-    priceTo: Number(searchParams.get("priceTo")) || undefined,
+    priceFrom: searchParams.get("priceFrom")
+      ? Number(searchParams.get("priceFrom"))
+      : undefined,
+    priceTo: searchParams.get("priceTo")
+      ? Number(searchParams.get("priceTo"))
+      : undefined,
   })
 
   const [sortBy, setSortBy] = useState<string>(
@@ -64,14 +61,21 @@ export const useFilters = (): ReturnProps => {
     }))
   }, [])
 
+  const resetFilters = useCallback(() => {
+    clearIngredients()
+    clearPizzaTypes()
+    clearSizes()
+    setPrices({ priceFrom: undefined, priceTo: undefined })
+  }, [clearIngredients, clearPizzaTypes, clearSizes])
+
   return useMemo(
     () => ({
       setIngredients: toggleIngredients,
-      setSelectedIngredients: toggleIngredients,
       setPizzaTypes: togglePizzaTypes,
       setSizes: toggleSizes,
       setPrices: updatePrice,
       setSortBy,
+      resetFilters,
       prices,
       selectedIngredients,
       pizzaTypes: selectedPizzaTypes,
@@ -88,6 +92,7 @@ export const useFilters = (): ReturnProps => {
       togglePizzaTypes,
       toggleSizes,
       updatePrice,
+      resetFilters,
     ]
   )
 }

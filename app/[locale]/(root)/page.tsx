@@ -8,18 +8,20 @@ import {
 } from "@/shared/components/shared"
 import { Skeleton } from "@/shared/components/ui"
 import { getPizzas, GetSearchParams } from "@/shared/lib/find-pizzas"
+import { getTranslations } from "next-intl/server"
 
 export default async function Page({
   searchParams,
 }: {
   searchParams: Promise<GetSearchParams>
 }) {
+  const t = await getTranslations("Home")
   const categories = await getPizzas(searchParams)
 
   return (
     <>
       <Container className="mt-10">
-        <Title text="Все пиццы" size="lg" className="font-extrabold" />
+        <Title text={t("allPizzas")} size="lg" className="font-extrabold" />
       </Container>
 
       <TopBar

@@ -7,6 +7,7 @@ import { useIntersection } from "react-use"
 import { useRef, useEffect, type RefObject } from "react"
 import { useCategoryStore } from "@/shared/store/category"
 import { ProductWithRelations } from "@/@types/prisma"
+import { LayoutGroup, AnimatePresence, motion } from "framer-motion"
 
 interface Props {
   title: string
@@ -45,20 +46,28 @@ export const ProductsGroupList = ({
     <div className={cn("", className)} id={id} ref={intersectionRef}>
       <Title text={title} size="lg" className="mb-5 font-extrabold" />
 
-      <div className={cn("grid grid-cols-3 gap-[50px]", listClassName)}>
-        {items.map((product) => (
-          <ProductCard
-            key={product.id}
-            id={String(product.id)}
-            name={product.name}
-            imageUrl={product.imageUrl}
-            description={product.ingredients
-              .map((ingredient) => ingredient.name)
-              .join(", ")}
-            price={product.items[0].price}
-          />
-        ))}
-      </div>
+      <LayoutGroup>
+        <motion.div
+          className={cn("grid grid-cols-3 gap-[50px]", listClassName)}
+        >
+          <AnimatePresence mode="popLayout">
+            {items.map((product) => (
+              <ProductCard
+                key={product.id}
+                id={String(product.id)}
+                name={product.name}
+                imageUrl={product.imageUrl}
+                description={product.ingredients
+                  .map((ingredient) => ingredient.name)
+                  .join(", ")}
+                price={product.items[0].price}
+                productItemId={product.items[0].id}
+                isPizza={product.items.length > 1}
+              />
+            ))}
+          </AnimatePresence>
+        </motion.div>
+      </LayoutGroup>
     </div>
   )
 }

@@ -45,21 +45,29 @@ function getDebouncedUpdater(id: number) {
         ) => void
       ) => {
         try {
+          set({ loading: true, error: false })
           const data = await Api.Cart.updateItemQuantity(id, quantity)
-
-          if ((updateVersions.get(id) ?? 0) !== version) return
-
           const { items: serverItems } = getCartDetails(data)
 
-          setItems(set, (stateItems) =>
-            stateItems.map((item) => {
-              const serverItem = serverItems.find((s) => s.id === item.id)
-              return serverItem ?? item
-            })
-          )
+          set((state) => {
+            if ((updateVersions.get(id) ?? 0) !== version) return state
+
+            return {
+              ...getCartDetails(data),
+              items: state.items.map((item) => {
+                const serverItem = serverItems.find((s) => s.id === item.id)
+                if (
+                  serverItem &&
+                  (updateVersions.get(item.id) ?? 0) <= version
+                ) {
+                  return serverItem
+                }
+                return item
+              }),
+            }
+          })
         } catch (error) {
           console.error(`Failed to update item ${id}:`, error)
-
           if ((updateVersions.get(id) ?? 0) !== version) return
 
           try {
@@ -68,6 +76,8 @@ function getDebouncedUpdater(id: number) {
           } catch {
             set({ error: true })
           }
+        } finally {
+          set({ loading: false })
         }
       },
       250
@@ -77,10 +87,10 @@ function getDebouncedUpdater(id: number) {
   return debouncedUpdaters.get(id)!
 }
 
-export const useCartStore = create<CartState>((set, get) => ({
+export const useCartStore = create<CartState>((set) => ({
   items: [],
   error: false,
-  loading: true,
+  loading: false,
   totalAmount: 0,
 
   fetchCartItems: async () => {
@@ -113,17 +123,26 @@ export const useCartStore = create<CartState>((set, get) => ({
   },
 
   removeCartItem: async (id: number) => {
-    const snapshot = get().items
-
-    setItems(set, (items) => items.filter((item) => item.id !== id))
-
     try {
+      set((state) => ({
+        loading: true,
+        error: false,
+        items: state.items.filter((item) => item.id !== id),
+      }))
       const data = await Api.Cart.removeCartItem(id)
-      set(getCartDetails(data))
+      const serverDetails = getCartDetails(data)
+
+      set((state) => ({
+        ...serverDetails,
+        items: serverDetails.items.filter((item) => {
+          return state.items.find((si) => si.id === item.id)
+        }),
+      }))
     } catch (error) {
       console.error(error)
       set({ error: true })
-      setItems(set, () => snapshot)
+    } finally {
+      set({ loading: false })
     }
   },
 

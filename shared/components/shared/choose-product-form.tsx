@@ -1,6 +1,9 @@
 import { cn } from "@/shared/lib"
 import { Button } from "../ui"
 import { Title } from "./title"
+import Image from "next/image"
+import { motion } from "framer-motion"
+import { useTranslations } from "next-intl"
 
 interface Props {
   imageUrl: string
@@ -18,18 +21,22 @@ export const ChooseProductForm = ({
   price,
   onAddToCart,
 }: Props) => {
+  const t = useTranslations("Cart")
+  const commonT = useTranslations("Common")
+
   return (
     <div className={cn(className, "flex flex-1")}>
       <div className="relative flex w-full flex-1 items-center justify-center">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+        <Image
           src={imageUrl}
           alt={name}
-          className="relative top-2 left-2 z-10 h-[350px] w-[350px] transition-all duration-300"
+          width={350}
+          height={350}
+          className="relative top-2 left-2 z-10 transition-all duration-300"
         />
       </div>
 
-      <div className="w-[490px] bg-[#f7f6f5] p-7">
+      <div className="w-[490px] bg-surface-secondary p-7">
         <Title text={name} size="md" className="mb-1 font-extrabold" />
 
         <Button
@@ -37,7 +44,15 @@ export const ChooseProductForm = ({
           className="mt-5 h-[55px] w-full rounded-[18px] px-10 text-base"
           onClick={() => onAddToCart(1, [])}
         >
-          Добавить в корзину за {price} $
+          {t("addToCart")}{" "}
+          <motion.span
+            key={price}
+            initial={{ opacity: 0, y: 2 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="ml-1"
+          >
+            {price} {commonT("currency")}
+          </motion.span>
         </Button>
       </div>
     </div>

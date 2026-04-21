@@ -46,3 +46,8 @@ next-env.d.ts
 /prisma/migrations
 
 CHANGELOG.md
+
+.idea/
+.gemini/
+*.sqlite
+*.sqlite3

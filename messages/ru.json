@@ -1,0 +1,60 @@
+{
+  "Common": {
+    "back": "Вернуться назад",
+    "loading": "Загрузка...",
+    "error": "Произошла ошибка",
+    "add": "Добавить",
+    "select": "Выбрать",
+    "total": "Итого",
+    "priceFrom": "от <bold>{price} $</bold>",
+    "currency": "$"
+  },
+  "Filters": {
+    "title": "Фильтры",
+    "priceRange": "Цена от и до:",
+    "ingredients": "Ингредиенты",
+    "doughType": "Тип теста",
+    "sizesTitle": "Размеры",
+    "thin": "Тонкое",
+    "traditional": "Традиционное",
+    "sizeCm": "{cm} см",
+    "reset": "Сбросить фильтры",
+    "showAll": "+ Показать все",
+    "hide": "Скрыть",
+    "searchPlaceholder": "Поиск...",
+    "pizzaDescription": "{size} см, {type} тесто"
+  },
+  "Header": {
+    "slogan": "вкусней уже некуда",
+    "searchPlaceholder": "Найти пиццу...",
+    "login": "Войти",
+    "cart": "Корзина"
+  },
+  "Cart": {
+    "title": "Корзина",
+    "emptyTitle": "Корзина пустая",
+    "emptyText": "Добавьте хотя бы одну пиццу, чтобы совершить заказ",
+    "addToCart": "Добавить в корзину за",
+    "checkout": "Оформить заказ",
+    "itemsCount": "{count, plural, one {# товар} few {# товара} many {# товаров} other {# товаров}}",
+    "toastSuccess": "Товар {name} добавлен в корзину",
+    "toastError": "Ошибка при добавлении товара в корзину",
+    "inCart": "В корзине"
+  },
+  "Product": {
+    "addedToCart": "Товар {name} добавлен в корзину",
+    "errorAdding": "Произошла ошибка при добавлении в корзину"
+  },
+  "Home": {
+    "allPizzas": "Все пиццы"
+  },
+  "Sort": {
+    "title": "Сортировка:",
+    "rating": "По умолчанию",
+    "priceAsc": "Сначала недорогие",
+    "priceDesc": "Сначала дорогие"
+  },
+  "Theme": {
+    "toggle": "Переключить тему"
+  }
+}

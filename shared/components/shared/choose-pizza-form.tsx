@@ -7,10 +7,10 @@ import { ProductImage } from "./product-image"
 import { Ingredient, ProductItem } from "@prisma/client"
 import { GroupVariants } from "./group-variants"
 import { PizzaSize, PizzaType } from "@/shared/constants/pizza"
-import { VisuallyHidden } from "radix-ui"
-import { DialogTitle } from "../ui/dialog"
 import { IngredientItem } from "./ingredient-item"
 import { usePizzaOptions } from "@/shared/hooks"
+import { motion } from "framer-motion"
+import { useTranslations } from "next-intl"
 
 interface Props {
   imageUrl: string
@@ -30,6 +30,8 @@ export const ChoosePizzaForm = ({
   className,
   onAddToCart,
 }: Props) => {
+  const t = useTranslations("Cart")
+  const commonT = useTranslations("Common")
   const {
     size,
     type,
@@ -59,14 +61,10 @@ export const ChoosePizzaForm = ({
         className="w-[55%]"
       />
 
-      <div className="w-[490px] bg-secondary p-7">
-        <VisuallyHidden.Root>
-          <DialogTitle>{name}</DialogTitle>
-        </VisuallyHidden.Root>
-
+      <div className="w-[490px] bg-surface-secondary p-7">
         <Title text={name} size="md" className="mb-1 font-extrabold" />
 
-        <p className="text-gray-400">{textDetaills}</p>
+        <p className="text-muted-foreground">{textDetaills}</p>
 
         <div className="mt-5 flex flex-col gap-4">
           <GroupVariants
@@ -82,7 +80,7 @@ export const ChoosePizzaForm = ({
           />
         </div>
 
-        <div className="scrollbar mt-5 h-[420px] overflow-auto rounded-md bg-gray-50 p-5">
+        <div className="scrollbar mt-5 h-[420px] overflow-auto rounded-md bg-muted p-5">
           <div className="grid grid-cols-3 gap-3">
             {ingredients.map((ingredient) => (
               <IngredientItem
@@ -104,7 +102,15 @@ export const ChoosePizzaForm = ({
             onAddToCart(currentPizza!.id, Array.from(selectedIngredients))
           }
         >
-          Добавить в корзину за {totalPrice} $
+          {t("addToCart")}{" "}
+          <motion.span
+            key={totalPrice}
+            initial={{ opacity: 0, y: 2 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="ml-1"
+          >
+            {totalPrice} {commonT("currency")}
+          </motion.span>
         </Button>
       </div>
     </div>

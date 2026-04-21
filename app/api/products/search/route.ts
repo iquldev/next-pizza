@@ -16,6 +16,9 @@ export async function GET(req: NextRequest) {
         mode: "insensitive",
       },
     },
+    include: {
+      items: true,
+    },
     take: 5,
   })
   return NextResponse.json(products)

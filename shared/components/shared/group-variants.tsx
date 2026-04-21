@@ -20,7 +20,7 @@ export const GroupVariants = ({ items, onClick, className, value }: Props) => {
     <div
       className={cn(
         className,
-        "flex justify-between rounded-3xl bg-[#F3F3F7] p-1 select-none"
+        "flex justify-between rounded-3xl bg-surface-variant p-1 select-none"
       )}
     >
       {items.map((item) => (
@@ -30,8 +30,8 @@ export const GroupVariants = ({ items, onClick, className, value }: Props) => {
           className={cn(
             "flex h-[30px] flex-1 cursor-pointer items-center justify-center rounded-3xl px-5 text-sm transition-all duration-400",
             {
-              "bg-white shadow": item.value === value,
-              "pointer-events-none text-gray-500 opacity-50": item.disabled,
+              "bg-background shadow": item.value === value,
+              "pointer-events-none text-muted-foreground opacity-50": item.disabled,
             }
           )}
         >
