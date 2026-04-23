@@ -1,11 +1,11 @@
 "use client"
 
-import React from "react"
+import { Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
+import React from "react"
+import { useTranslations } from "next-intl"
 import { cn } from "@/shared/lib"
 import { Button } from "../ui"
-import { Moon, Sun } from "lucide-react"
-import { useTranslations } from "next-intl"
 
 type Props = {
   className?: string

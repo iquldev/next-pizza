@@ -1,7 +1,7 @@
 import { create } from "zustand"
 import { Api } from "../services/api-client"
 import { getCartDetails, CartStateItem } from "../lib"
-import { debounce } from "lodash"
+import debounce from "lodash.debounce"
 import { CreateCartItemValues } from "../services/dto/cart.dto"
 
 export interface CartState {

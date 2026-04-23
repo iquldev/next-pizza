@@ -7,9 +7,11 @@ import { Skeleton } from "./skeleton"
 import { Slider } from "./slider"
 import { Popover } from "./popover"
 import { Drawer } from "./drawer"
+import { Textarea } from "./textarea"
 
 export {
   Button,
+  Textarea,
   Input,
   Checkbox,
   Dialog,

@@ -56,5 +56,31 @@
   },
   "Theme": {
     "toggle": "Toggle theme"
+  },
+  "Checkout": {
+    "title": "Checkout",
+    "cartTitle": "1. Cart",
+    "personalTitle": "2. Personal information",
+    "addressTitle": "3. Delivery address",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "email": "E-Mail",
+    "phone": "Phone",
+    "address": "Address",
+    "comment": "Order comment",
+    "total": "Total",
+    "cartAmount": "Cart amount",
+    "taxes": "Taxes",
+    "delivery": "Delivery",
+    "pay": "Pay now",
+    "loadingAddress": "Loading address...",
+    "addressPlaceholder": "Enter address"
+  },
+  "Validation": {
+    "firstName": "First name must be at least 2 characters",
+    "lastName": "Last name must be at least 2 characters",
+    "email": "Enter a valid E-Mail address",
+    "phone": "Enter a phone number in format +7 (999) 999-99-99",
+    "address": "Enter a valid delivery address"
   }
 }
