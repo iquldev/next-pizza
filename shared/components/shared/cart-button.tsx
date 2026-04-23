@@ -2,7 +2,7 @@
 
 import { cn } from "@/shared/lib"
 import { Button } from "../ui"
-import { ArrowRight, ShoppingCart, User } from "lucide-react"
+import { ArrowRight, ShoppingCart } from "lucide-react"
 import { CartDrawer } from "./cart-drawer"
 import { useCartStore } from "@/shared/store/cart"
 import { useTranslations } from "next-intl"
@@ -19,11 +19,6 @@ export const CartButton = ({ className }: Props) => {
   const loading = useCartStore((state) => state.loading)
   return (
     <div className={cn("flex items-center gap-3", className)}>
-      <Button variant="outline" className="flex items-center gap-1">
-        <User size={16} />
-        {t("login")}
-      </Button>
-
       <div>
         <CartDrawer>
           <Button

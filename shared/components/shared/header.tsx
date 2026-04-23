@@ -4,14 +4,20 @@ import { cn } from "@/shared/lib"
 import { Container } from "./container"
 import Image from "next/image"
 import { Link } from "@/i18n/routing"
-import { SearchInput, CartButton, ThemeButton } from "./index"
+import { SearchInput, CartButton, ThemeButton, LoginButton } from "./index"
 import { useTranslations } from "next-intl"
 
 interface Props {
   className?: string
+  hasSearch?: boolean
+  hasCart?: boolean
 }
 
-export const Header = ({ className }: Props) => {
+export const Header = ({
+  className,
+  hasSearch = true,
+  hasCart = true,
+}: Props) => {
   const t = useTranslations("Header")
 
   return (
@@ -29,13 +35,12 @@ export const Header = ({ className }: Props) => {
           </div>
         </Link>
 
-        <div className="mx-10 flex-1">
-          <SearchInput />
-        </div>
+        <div className="mx-10 flex-1">{hasSearch && <SearchInput />}</div>
 
         <div className="flex items-center gap-3">
           <ThemeButton />
-          <CartButton />
+          {hasCart && <CartButton />}
+          <LoginButton />
         </div>
       </Container>
     </header>
