@@ -11,8 +11,33 @@ export interface GetSearchParams {
   priceTo?: string
 }
 
-const DEFAULT_MIN_PRICE = 0
-const DEFAULT_MAX_PRICE = 200
+export const getIngredients = unstable_cache(
+  async () => {
+    return await prisma.ingredient.findMany()
+  },
+  ["ingredients-list"],
+  {
+    revalidate: 60 * 60 * 24,
+    tags: ["ingredients-list"],
+  }
+)
+
+export const getCategories = unstable_cache(
+  async () => {
+    return await prisma.category.findMany({
+      where: {
+        products: {
+          some: {},
+        },
+      },
+    })
+  },
+  ["categories-list"],
+  {
+    revalidate: 60 * 60 * 24,
+    tags: ["categories-list"],
+  }
+)
 
 export const getPizzas = async (
   params: Promise<GetSearchParams> | GetSearchParams
@@ -23,8 +48,8 @@ export const getPizzas = async (
   const pizzaTypes = searchParams.pizzaTypes?.split(",").map(Number) || []
   const ingredients = searchParams.ingredients?.split(",").map(Number) || []
 
-  const priceFrom = Number(searchParams.priceFrom) || DEFAULT_MIN_PRICE
-  const priceTo = Number(searchParams.priceTo) || DEFAULT_MAX_PRICE
+  const priceFrom = Number(searchParams.priceFrom) || 0
+  const priceTo = Number(searchParams.priceTo) || 200
 
   const sort = Array.isArray(searchParams.sortBy)
     ? searchParams.sortBy[0]
@@ -39,7 +64,7 @@ export const getPizzas = async (
     priceTo,
   })
 
-  const getCategories = unstable_cache(
+  const getCategoriesWithProducts = unstable_cache(
     async () => {
       return await prisma.category.findMany({
         include: {
@@ -91,14 +116,14 @@ export const getPizzas = async (
         },
       })
     },
-    ["categories", cacheKey],
+    ["categories-with-products", cacheKey],
     {
       revalidate: 60 * 60 * 24,
-      tags: ["categories"],
+      tags: ["categories-with-products"],
     }
   )
 
-  const categories = await getCategories()
+  const categories = await getCategoriesWithProducts()
 
   if (sort === "price" || sort === "-price") {
     return categories.map((category) => ({

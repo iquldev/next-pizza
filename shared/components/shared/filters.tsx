@@ -10,14 +10,19 @@ import { useMemo } from "react"
 import { Button } from "../ui"
 import { motion, AnimatePresence } from "framer-motion"
 import { useTranslations } from "next-intl"
+import { Ingredient } from "@prisma/client"
 
 interface Props {
   className?: string
+  ingredients?: Ingredient[]
 }
 
-export const Filters = ({ className }: Props) => {
+export const Filters = ({
+  className,
+  ingredients: initialIngredients,
+}: Props) => {
   const t = useTranslations("Filters")
-  const { ingredients, loading } = useIngredients()
+  const { ingredients, loading } = useIngredients(initialIngredients)
   const filters = useFilters()
 
   useQueryFilters(filters)

@@ -1,5 +1,4 @@
 "use client"
-
 import React from "react"
 import { useFormContext, Controller } from "react-hook-form"
 import { useTranslations } from "next-intl"
@@ -34,12 +33,6 @@ export const FormInput = ({
     setValue,
   } = useFormContext()
 
-  const [mounted, setMounted] = React.useState(false)
-
-  React.useEffect(() => {
-    setMounted(true)
-  }, [])
-
   const value = watch(name)
   const errorTextKey = errors[name]?.message as string
   const errorText = errorTextKey ? t(errorTextKey as any) : ""
@@ -58,41 +51,36 @@ export const FormInput = ({
           {label} {required && <RequiredSymbol />}
         </p>
       )}
-
-      <div className="relative">
-        {mounted ? (
-          <Controller
-            control={control}
-            name={name}
-            render={({ field }) => (
-              <>
-                {mask ? (
-                  <IMaskInput
-                    mask={mask}
-                    value={field.value}
-                    unmask={false}
-                    onAccept={(value) => field.onChange(value)}
-                    className={cn(inputStyles, "flex")}
-                    placeholder={props.placeholder}
-                    disabled={props.disabled}
-                  />
-                ) : (
-                  <Input className="text-md h-12" {...field} {...props} />
-                )}
-              </>
-            )}
-          />
-        ) : (
-          <Input
-            className="text-md h-12"
-            placeholder={props.placeholder}
-            readOnly
-          />
-        )}
-
+      <div className="relative" suppressHydrationWarning>
+        <Controller
+          control={control}
+          name={name}
+          render={({ field }) => (
+            <>
+              {mask ? (
+                <IMaskInput
+                  mask={mask}
+                  value={field.value}
+                  unmask={false}
+                  onAccept={(value) => field.onChange(value)}
+                  className={cn(inputStyles, "flex")}
+                  placeholder={props.placeholder}
+                  disabled={props.disabled}
+                  suppressHydrationWarning
+                />
+              ) : (
+                <Input
+                  className="text-md h-12"
+                  {...field}
+                  {...props}
+                  suppressHydrationWarning
+                />
+              )}
+            </>
+          )}
+        />
         {value && <ClearButton onClick={onClickClear} />}
       </div>
-
       {errorText && <ErrorText text={errorText} className="mt-2" />}
     </div>
   )

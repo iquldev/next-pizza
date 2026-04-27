@@ -7,7 +7,9 @@
     "select": "Select",
     "total": "Total",
     "priceFrom": "from <bold>${price}</bold>",
-    "currency": "$"
+    "currency": "$",
+    "goHome": "Go Home",
+    "refresh": "Refresh"
   },
   "Filters": {
     "title": "Filters",
@@ -74,7 +76,9 @@
     "delivery": "Delivery",
     "pay": "Pay now",
     "loadingAddress": "Loading address...",
-    "addressPlaceholder": "Enter address"
+    "addressPlaceholder": "Enter address",
+    "orderError": "Error creating order",
+    "orderSuccess": "Order created successfully"
   },
   "Validation": {
     "firstName": "First name must be at least 2 characters",

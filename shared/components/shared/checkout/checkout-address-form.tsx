@@ -4,9 +4,8 @@ import { useTranslations } from "next-intl"
 import { Controller, useFormContext } from "react-hook-form"
 
 import { WhiteBlock } from "../white-block"
-import { FormTextarea } from "../form"
+import { FormInput, FormTextarea } from "../form"
 import { ErrorText } from "../error-text"
-import { AddressInput } from "../address-input"
 
 interface Props {
   className?: string
@@ -23,9 +22,14 @@ export const CheckoutAddressForm = ({ className }: Props) => {
         <Controller
           control={control}
           name="address"
-          render={({ field, fieldState }) => (
+          render={({ fieldState }) => (
             <>
-              <AddressInput onChange={field.onChange} />
+              <FormInput
+                name="address"
+                className="text-base"
+                placeholder={t("addressPlaceholder")}
+                autoComplete="street-address"
+              />
               {fieldState.error?.message && (
                 <ErrorText
                   text={commonT(fieldState.error.message as any)}

@@ -1,14 +1,16 @@
 import useSWR from "swr"
 import { Api } from "../services/api-client"
+import { Ingredient } from "@prisma/client"
 
-export const useIngredients = () => {
+export const useIngredients = (initialIngredients: Ingredient[] = []) => {
   const { data, error, isLoading } = useSWR(
     "ingredients",
     Api.Ingredients.getAll,
     {
+      fallbackData: initialIngredients,
       revalidateOnFocus: false,
     }
   )
 
-  return { ingredients: data || [], error, loading: isLoading }
+  return { ingredients: data || [], error, loading: isLoading && !data }
 }

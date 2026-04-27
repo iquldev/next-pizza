@@ -1,8 +1,11 @@
+"use client"
+
 import { Button } from "../ui"
 import { ArrowLeft } from "lucide-react"
 import { Title } from "./title"
 import { Link } from "@/i18n/routing"
 import { cn } from "@/shared/lib/utils"
+import { useTranslations } from "next-intl"
 
 interface Props {
   title: string
@@ -17,6 +20,8 @@ export const InfoBlock: React.FC<Props> = ({
   text,
   imageUrl,
 }) => {
+  const t = useTranslations("Common")
+
   return (
     <div
       className={cn(
@@ -33,7 +38,7 @@ export const InfoBlock: React.FC<Props> = ({
         <Link href="/">
           <Button variant="outline" className="gap-2">
             <ArrowLeft />
-            На главную
+            {t("goHome")}
           </Button>
         </Link>
         <a href="">
@@ -41,7 +46,7 @@ export const InfoBlock: React.FC<Props> = ({
             variant="outline"
             className="border-muted-foreground text-muted-foreground hover:bg-secondary"
           >
-            Обновить
+            {t("refresh")}
           </Button>
         </a>
       </div>

@@ -13,10 +13,16 @@ const DELIVERY_PRICE = 250
 interface Props {
   totalAmount: number
   loading?: boolean
+  submitting?: boolean
   className?: string
 }
 
-export const CheckoutSidebar = ({ totalAmount, loading, className }: Props) => {
+export const CheckoutSidebar = ({
+  totalAmount,
+  loading,
+  submitting,
+  className,
+}: Props) => {
   const t = useTranslations("Checkout")
   const commonT = useTranslations("Common")
 
@@ -83,8 +89,8 @@ export const CheckoutSidebar = ({ totalAmount, loading, className }: Props) => {
       />
 
       <Button
-        loading={loading}
         type="submit"
+        loading={loading || submitting}
         className="mt-6 h-14 w-full rounded-2xl text-base font-bold"
       >
         {t("pay")}

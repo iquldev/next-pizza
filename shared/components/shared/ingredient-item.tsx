@@ -1,7 +1,7 @@
 import { cn } from "@/shared/lib"
-import { CircleCheck } from "lucide-react"
 import Image from "next/image"
 import { motion } from "framer-motion"
+import { CircleCheck } from "lucide-react"
 
 interface Props {
   className?: string

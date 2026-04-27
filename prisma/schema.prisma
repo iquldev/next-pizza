@@ -39,43 +39,47 @@ model Category {
 model Product {
   id Int @id @default(autoincrement())
 
-  name String
+  name     String
   imageUrl String
 
   ingredients Ingredient[]
-  items ProductItem[]
+  items       ProductItem[]
 
-  category Category @relation(fields: [categoryId], references: [id]) 
-  categoryId Int 
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId Int
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([categoryId])
 }
 
 model ProductItem {
   id Int @id @default(autoincrement())
 
-  price Int
-  size Int?
+  price     Int
+  size      Int?
   pizzaType Int?
 
-  product Product @relation(fields: [productId], references: [id])
+  product   Product @relation(fields: [productId], references: [id])
   productId Int
 
   cartItems CartItem[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([productId])
 }
 
 model Ingredient {
   id Int @id @default(autoincrement())
 
-  name String
-  price Int
+  name     String
+  price    Int
   imageUrl String
 
-  products Product[]
+  products  Product[]
   cartItems CartItem[]
 
   createdAt DateTime @default(now())
@@ -85,15 +89,15 @@ model Ingredient {
 model Cart {
   id Int @id @default(autoincrement())
 
-  user User? @relation(fields: [userId], references: [id])
-  userId Int? @unique
+  user   User? @relation(fields: [userId], references: [id])
+  userId Int?  @unique
 
   token String
 
   items CartItem[]
 
   totalAmount Int @default(0)
-  
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -101,10 +105,10 @@ model Cart {
 model CartItem {
   id Int @id @default(autoincrement())
 
-  productItem ProductItem @relation(fields: [productItemId], references: [id])
+  productItem   ProductItem @relation(fields: [productItemId], references: [id])
   productItemId Int
 
-  cart Cart @relation(fields: [cartId], references: [id])
+  cart   Cart @relation(fields: [cartId], references: [id])
   cartId Int
 
   quantity Int @default(1)
@@ -113,6 +117,9 @@ model CartItem {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([cartId])
+  @@index([productItemId])
 }
 
 model Order {

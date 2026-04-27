@@ -7,7 +7,9 @@
     "select": "Выбрать",
     "total": "Итого",
     "priceFrom": "от <bold>{price} $</bold>",
-    "currency": "$"
+    "currency": "$",
+    "goHome": "На главную",
+    "refresh": "Обновить"
   },
   "Filters": {
     "title": "Фильтры",
@@ -74,7 +76,9 @@
     "delivery": "Доставка",
     "pay": "Перейти к оплате",
     "loadingAddress": "Загрузка адреса...",
-    "addressPlaceholder": "Введите адрес"
+    "addressPlaceholder": "Введите адрес",
+    "orderError": "Ошибка при оформлении заказа",
+    "orderSuccess": "Заказ оформлен успешно"
   },
   "Validation": {
     "firstName": "Имя должно содержать не менее 2-х символов",
