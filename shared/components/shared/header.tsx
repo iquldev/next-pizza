@@ -6,6 +6,9 @@ import Image from "next/image"
 import { Link } from "@/i18n/routing"
 import { SearchInput, CartButton, ThemeButton, LoginButton } from "./index"
 import { useTranslations } from "next-intl"
+import { useEffect } from "react"
+import { useSearchParams } from "next/navigation"
+import { toast } from "sonner"
 
 interface Props {
   className?: string
@@ -18,7 +21,18 @@ export const Header = ({
   hasSearch = true,
   hasCart = true,
 }: Props) => {
+  const searchParams = useSearchParams()
+
   const t = useTranslations("Header")
+  const payT = useTranslations("Checkout")
+
+  useEffect(() => {
+    if (searchParams.has("paid")) {
+      toast.success(payT("orderSuccess"))
+    } else if (searchParams.has("cancelled")) {
+      toast.error(payT("orderError"))
+    }
+  })
 
   return (
     <header className={cn("border border-b", className)}>

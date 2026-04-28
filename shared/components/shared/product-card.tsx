@@ -5,7 +5,7 @@ import Image from "next/image"
 import { Link, useRouter } from "@/i18n/routing"
 import { Title } from "./title"
 import { Button } from "../ui/button"
-import { Plus } from "lucide-react"
+import { Pizza, Plus } from "lucide-react"
 import { useCartStore } from "@/shared/store/cart"
 import { toast } from "sonner"
 import { useState } from "react"
@@ -98,7 +98,12 @@ export const ProductCard = ({
             onClick={onClickAdd}
             loading={adding}
           >
-            <Plus size={20} className="mr-1" />
+            {isPizza ? (
+              <Pizza size={20} className="mr-2" />
+            ) : (
+              <Plus size={20} className="mr-2" />
+            )}
+
             {isPizza ? t("select") : t("add")}
           </Button>
         </div>

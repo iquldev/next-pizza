@@ -15,7 +15,6 @@ import {
   GetSearchParams,
 } from "@/shared/lib/find-pizzas"
 import { getTranslations } from "next-intl/server"
-import { prisma } from "@/prisma/prisma-client"
 
 export default async function Page({
   searchParams,
