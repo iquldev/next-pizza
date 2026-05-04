@@ -1,9 +1,8 @@
 "use client"
-
 import { FormProvider, useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
-
+import { useEffect } from "react"
 import { Container, Title } from "@/shared/components/shared"
 import {
   CheckoutAddressForm,
@@ -19,9 +18,12 @@ import {
 import { createOrder } from "@/app/actions"
 import { toast } from "sonner"
 import { useState } from "react"
+import { authClient } from "@/shared/lib"
 
 export default function CheckoutPage() {
   const t = useTranslations("Checkout")
+  const { data: session } = authClient.useSession()
+
   const { totalAmount, items, updateItemQuantity, removeCartItem, loading } =
     useCart()
   const [submitting, setSubmitting] = useState(false)
@@ -38,16 +40,27 @@ export default function CheckoutPage() {
     },
   })
 
+  useEffect(() => {
+    if (!session?.user) return
+    const [firstName = "", lastName = ""] = (session.user.name ?? "").split(" ")
+
+    form.reset({
+      email: session.user.email ?? "",
+      firstName,
+      lastName,
+      phone: "",
+      address: "",
+      comment: "",
+    })
+  }, [session])
+
   const onSubmit = async (data: CheckoutFormValues) => {
     try {
       setSubmitting(true)
-
       const url = await createOrder(data)
-
       if (url) {
         window.location.replace(url)
       }
-
       toast.success(t("orderSuccess"))
     } catch {
       toast.error(t("orderError"))
@@ -67,7 +80,6 @@ export default function CheckoutPage() {
   return (
     <Container className="mt-10">
       <Title text={t("title")} className="mb-10 font-extrabold" size="lg" />
-
       <FormProvider {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="flex gap-10">
@@ -78,16 +90,13 @@ export default function CheckoutPage() {
                 items={items}
                 loading={loading}
               />
-
               <CheckoutPersonalForm
                 className={loading ? "pointer-events-none opacity-40" : ""}
               />
-
               <CheckoutAddressForm
                 className={loading ? "pointer-events-none opacity-40" : ""}
               />
             </div>
-
             <div className="w-[450px]">
               <CheckoutSidebar
                 totalAmount={totalAmount}

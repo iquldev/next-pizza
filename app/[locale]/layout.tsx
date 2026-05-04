@@ -16,6 +16,9 @@ const fontSans = Nunito({
   weight: ["400", "500", "600", "700", "800", "900"],
 })
 
+import { Suspense } from "react"
+import { TopLoader } from "@/shared/components/shared"
+
 export default async function RootLayout({
   children,
   params,
@@ -44,6 +47,9 @@ export default async function RootLayout({
       <body>
         <NextIntlClientProvider messages={messages} locale={locale}>
           <ThemeProvider>
+            <Suspense>
+              <TopLoader />
+            </Suspense>
             <Toaster />
             {children}
           </ThemeProvider>

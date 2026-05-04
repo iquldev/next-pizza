@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server"
 import Stripe from "stripe"
 import { prisma } from "@/prisma/prisma-client"
 import { OrderStatus } from "@prisma/client"
-import { sendEmail } from "@/shared/lib"
+import { sendEmail } from "@/shared/lib/send-email"
 import { CartItemDTO } from "@/shared/services/dto/cart.dto"
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {

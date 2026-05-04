@@ -41,6 +41,7 @@ export const ProductCard = ({
 
   const onClickAdd = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
+    e.stopPropagation()
 
     if (isPizza) {
       router.push(`/product/${id}`)
@@ -73,7 +74,7 @@ export const ProductCard = ({
         opacity: { duration: 0.2 },
         layout: { type: "spring", stiffness: 500, damping: 40 },
       }}
-      className={cn("", className)}
+      className={cn("flex flex-col justify-between", className)}
     >
       <Link href={`/product/${id}`} prefetch={true}>
         <div className="flex h-[260px] justify-center rounded-lg bg-secondary p-6">
@@ -83,31 +84,31 @@ export const ProductCard = ({
         <Title text={name} size="sm" className="mt-3 mb-1 font-bold" />
 
         <p className="text-sm text-muted-foreground">{description}</p>
-
-        <div className="mt-4 flex items-center justify-between">
-          <span className="text-[20px]">
-            {t.rich("priceFrom", {
-              price,
-              bold: (chunks) => <b>{chunks}</b>,
-            })}
-          </span>
-
-          <Button
-            variant="secondary"
-            className="text-base font-bold"
-            onClick={onClickAdd}
-            loading={adding}
-          >
-            {isPizza ? (
-              <Pizza size={20} className="mr-2" />
-            ) : (
-              <Plus size={20} className="mr-2" />
-            )}
-
-            {isPizza ? t("select") : t("add")}
-          </Button>
-        </div>
       </Link>
+
+      <div className="mt-4 flex items-center justify-between">
+        <span className="text-[20px]">
+          {t.rich("priceFrom", {
+            price,
+            bold: (chunks) => <b>{chunks}</b>,
+          })}
+        </span>
+
+        <Button
+          variant="secondary"
+          className="text-base font-bold"
+          onClick={onClickAdd}
+          loading={adding}
+        >
+          {isPizza ? (
+            <Pizza size={20} className="mr-2" />
+          ) : (
+            <Plus size={20} className="mr-2" />
+          )}
+
+          {isPizza ? t("select") : t("add")}
+        </Button>
+      </div>
     </motion.div>
   )
 }

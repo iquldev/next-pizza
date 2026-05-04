@@ -30,6 +30,7 @@
     "slogan": "the best pizza in the world",
     "searchPlaceholder": "Find pizza...",
     "login": "Login",
+    "profile": "Profile",
     "cart": "Cart"
   },
   "Cart": {
@@ -85,6 +86,48 @@
     "lastName": "Last name must be at least 2 characters",
     "email": "Enter a valid E-Mail address",
     "phone": "Enter a phone number in format +7 (999) 999-99-99",
-    "address": "Enter a valid delivery address"
+    "address": "Enter a valid delivery address",
+    "password": "Password must be at least 6 characters",
+    "passwordMatch": "Passwords do not match"
+  },
+  "Auth": {
+    "loginTitle": "Sign in",
+    "loginDescription": "Enter your email to sign in to your account",
+    "registerTitle": "Create account",
+    "registerDescription": "Sign up to access all features",
+    "fullName": "Full name",
+    "email": "E-Mail",
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "loginButton": "Sign in",
+    "registerButton": "Create account",
+    "switchToRegister": "Create account",
+    "switchToLogin": "Back to sign in",
+    "logout": "Sign out",
+    "loginSuccess": "Signed in successfully",
+    "errorUserNotFound": "No account found with this email",
+    "errorInvalidCredentials": "Invalid email or password",
+    "errorEmailNotVerified": "Please verify your email before signing in. A verification link has been sent to your inbox",
+    "errorEmailTaken": "An account with this email already exists",
+    "error": "Something went wrong",
+    "verificationTitle": "Check your inbox",
+    "verificationDescription": "We sent a verification email to",
+    "verificationSpam": "Can't find it? Check your spam folder",
+    "verificationResend": "Resend email",
+    "verificationResent": "Verification email resent"
+  },
+  "Verification": {
+    "loadingTitle": "Verifying your email...",
+    "loadingDescription": "Please wait a moment",
+    "successTitle": "Email verified!",
+    "successDescription": "Your account has been successfully activated",
+    "successButton": "Go to homepage",
+    "errorTitle": "Link expired",
+    "errorDescription": "This verification link has expired or has already been used",
+    "errorResend": "Send a new link",
+    "errorBack": "Go to homepage",
+    "invalidTitle": "Invalid link",
+    "invalidDescription": "The token parameter is missing. Please use the link from the email",
+    "invalidBack": "Go to homepage"
   }
 }

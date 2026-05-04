@@ -30,6 +30,7 @@
     "slogan": "вкусней уже некуда",
     "searchPlaceholder": "Найти пиццу...",
     "login": "Войти",
+    "profile": "Профиль",
     "cart": "Корзина"
   },
   "Cart": {
@@ -85,6 +86,48 @@
     "lastName": "Фамилия должна содержать не менее 2-х символов",
     "email": "Введите корректный E-Mail адрес",
     "phone": "Введите номер телефона в формате +7 (999) 999-99-99",
-    "address": "Введите корректный адрес доставки"
+    "address": "Введите корректный адрес доставки",
+    "password": "Пароль должен содержать не менее 6-ти символов",
+    "passwordMatch": "Пароли не совпадают"
+  },
+  "Auth": {
+    "loginTitle": "Вход в аккаунт",
+    "loginDescription": "Введите свою почту, чтобы войти в свой аккаунт",
+    "registerTitle": "Регистрация",
+    "registerDescription": "Создайте аккаунт, чтобы пользоваться всеми возможностями",
+    "fullName": "Имя и фамилия",
+    "email": "E-Mail",
+    "password": "Пароль",
+    "confirmPassword": "Подтвердите пароль",
+    "loginButton": "Войти",
+    "registerButton": "Зарегистрироваться",
+    "switchToRegister": "Регистрация",
+    "switchToLogin": "Назад ко входу",
+    "logout": "Выйти",
+    "loginSuccess": "Успешный вход",
+    "errorUserNotFound": "Пользователь с таким email не найден",
+    "errorInvalidCredentials": "Неверный email или пароль",
+    "errorEmailNotVerified": "Подтвердите email перед входом. Письмо выслано на вашу почту",
+    "errorEmailTaken": "Этот email уже занят",
+    "error": "Что-то пошло не так",
+    "verificationTitle": "Подтвердите email",
+    "verificationDescription": "Мы отправили письмо на",
+    "verificationSpam": "Не видите письмо? Проверьте папку «Спам»",
+    "verificationResend": "Отправить повторно",
+    "verificationResent": "Письмо отправлено повторно"
+  },
+  "Verification": {
+    "loadingTitle": "Проверяем ссылку...",
+    "loadingDescription": "Подождите немного",
+    "successTitle": "Email подтверждён!",
+    "successDescription": "Ваш аккаунт успешно активирован",
+    "successButton": "Перейти на главную",
+    "errorTitle": "Ссылка недействительна",
+    "errorDescription": "Срок действия ссылки истёк или она уже была использована",
+    "errorResend": "Отправить новую ссылку",
+    "errorBack": "На главную",
+    "invalidTitle": "Некорректная ссылка",
+    "invalidDescription": "Параметр token отсутствует. Используйте ссылку из письма",
+    "invalidBack": "На главную"
   }
 }

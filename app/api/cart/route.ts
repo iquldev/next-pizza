@@ -41,11 +41,10 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
-    const token = req.cookies.get("cartToken")?.value
+    let token = req.cookies.get("cartToken")?.value
 
     if (!token) {
-      const newToken = crypto.randomUUID()
-      return NextResponse.json({ token: newToken })
+      token = crypto.randomUUID()
     }
 
     const userCart = await findOrCreateCart(token)
@@ -75,14 +74,6 @@ export async function POST(req: NextRequest) {
           quantity: findCartItem.quantity + 1,
         },
       })
-
-      const updatedUserCart = await updateCartTotalAmount(token)
-
-      const resp = NextResponse.json(updatedUserCart)
-
-      resp.cookies.set("cartToken", token)
-
-      return resp
     } else {
       await prisma.cartItem.create({
         data: {
@@ -94,11 +85,14 @@ export async function POST(req: NextRequest) {
           },
         },
       })
-
-      const updatedUserCart = await updateCartTotalAmount(token)
-
-      return NextResponse.json(updatedUserCart)
     }
+
+    const updatedUserCart = await updateCartTotalAmount(token)
+
+    const resp = NextResponse.json(updatedUserCart)
+    resp.cookies.set("cartToken", token)
+
+    return resp
   } catch (error) {
     console.log(error)
     return NextResponse.json(
