@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  output   = "./generated/prisma-client"
 }
 
 datasource db {
@@ -7,23 +8,67 @@ datasource db {
 }
 
 model User {
-  id Int @id @default(autoincrement())
+  id            String    @id @default(cuid())
+  name          String
+  email         String    @unique
+  emailVerified Boolean   @default(false)
+  image         String?
+  role          UserRole  @default(USER)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 
-  fullName String
-  email String @unique
-  password String
-  role UserRole @default(USER)
-  verified DateTime 
+  sessions      Session[]
+  accounts      Account[]
 
-  provider String?
-  providerId String?
-
-  cart Cart?
-  orders Order[]
+  cart          Cart?
+  orders        Order[]
   verificationCode VerificationCode?
 
+  @@map("user")
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  expiresAt DateTime
+  token     String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id @default(cuid())
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@map("account")
+}
+
+model Verification {
+  id         String    @id @default(cuid())
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime? @default(now())
+  updatedAt  DateTime? @updatedAt
+
+  @@map("verification")
 }
 
 model Category {
@@ -31,7 +76,7 @@ model Category {
 
   name String
   products Product[]
-  
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -89,8 +134,8 @@ model Ingredient {
 model Cart {
   id Int @id @default(autoincrement())
 
-  user   User? @relation(fields: [userId], references: [id])
-  userId Int?  @unique
+  user   User?   @relation(fields: [userId], references: [id])
+  userId String? @unique
 
   token String
 
@@ -125,8 +170,8 @@ model CartItem {
 model Order {
   id Int @id @default(autoincrement())
 
-  user User? @relation(fields: [userId], references: [id])
-  userId Int?
+  user   User?   @relation(fields: [userId], references: [id])
+  userId String?
 
   token String
 
@@ -141,7 +186,7 @@ model Order {
   phone String
   email String
   comment String?
-  
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -149,16 +194,15 @@ model Order {
 model VerificationCode {
   id Int @id @default(autoincrement())
 
-  user User @relation(fields: [userId], references: [id])
-  userId Int @unique
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @unique
 
   code String
 
   createdAt DateTime @default(now())
 
   @@unique([userId, code])
-} 
-
+}
 enum OrderStatus {
   PENDING
   SUCCEEDED

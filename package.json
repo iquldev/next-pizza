@@ -25,6 +25,7 @@
     "@types/qs": "^6.15.0",
     "axios": "^1.13.6",
     "bcrypt": "^6.0.0",
+    "better-auth": "^1.6.9",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "dotenv": "^17.3.1",

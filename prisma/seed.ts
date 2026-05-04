@@ -1,10 +1,9 @@
-import { Prisma } from "@prisma/client"
+import { Prisma } from "./generated/prisma-client"
 import { prisma } from "./prisma-client"
-import { hashSync } from "bcrypt"
 import { categories, _ingredients, products } from "./constants"
 
-const randomDecimalNumber = (min: number, max: number) => {
-  return Math.floor(Math.random() * (max - min) * 10 + min * 10) / 10
+const randomIntNumber = (min: number, max: number) => {
+  return Math.floor(Math.random() * (max - min) + min)
 }
 
 const generateProductItem = ({
@@ -18,30 +17,29 @@ const generateProductItem = ({
 }) => {
   return {
     productId,
-    price: randomDecimalNumber(5, 50),
+    price: randomIntNumber(5, 50),
     pizzaType,
     size,
   } as Prisma.ProductItemUncheckedCreateInput
 }
 
 async function up() {
-  await prisma.user.createMany({
-    data: [
-      {
-        fullName: "User Test",
-        email: "user@test.ru",
-        password: hashSync("111111", 10),
-        verified: new Date(),
-        role: "USER",
-      },
-      {
-        fullName: "Admin Admin",
-        email: "admin@test.ru",
-        password: hashSync("111111", 10),
-        verified: new Date(),
-        role: "ADMIN",
-      },
-    ],
+  const user = await prisma.user.create({
+    data: {
+      name: "User Test",
+      email: "user@test.ru",
+      emailVerified: true,
+      role: "USER",
+    },
+  })
+
+  const admin = await prisma.user.create({
+    data: {
+      name: "Admin Admin",
+      email: "admin@test.ru",
+      emailVerified: true,
+      role: "ADMIN",
+    },
   })
 
   await prisma.category.createMany({
@@ -63,7 +61,7 @@ async function up() {
         "https://media.dodostatic.net/image/r:233x233/11EE7D61304FAF5A98A6958F2BB2D260.webp",
       categoryId: 1,
       ingredients: {
-        connect: _ingredients.slice(0, 5),
+        connect: _ingredients.slice(0, 5).map((i) => ({ id: i.id })),
       },
     },
   })
@@ -75,7 +73,7 @@ async function up() {
         "https://media.dodostatic.net/image/r:233x233/11EE7D610CF7E265B7C72BE5AE757CA7.webp",
       categoryId: 1,
       ingredients: {
-        connect: _ingredients.slice(5, 10),
+        connect: _ingredients.slice(5, 10).map((i) => ({ id: i.id })),
       },
     },
   })
@@ -87,7 +85,7 @@ async function up() {
         "https://media.dodostatic.net/image/r:584x584/11EE7D61706D472F9A5D71EB94149304.webp",
       categoryId: 1,
       ingredients: {
-        connect: _ingredients.slice(10, 40),
+        connect: _ingredients.slice(10, 40).map((i) => ({ id: i.id })),
       },
     },
   })
@@ -132,12 +130,12 @@ async function up() {
   await prisma.cart.createMany({
     data: [
       {
-        userId: 1,
+        userId: user.id,
         totalAmount: 0,
         token: "11111",
       },
       {
-        userId: 2,
+        userId: admin.id,
         totalAmount: 0,
         token: "222222",
       },
@@ -157,7 +155,10 @@ async function up() {
 }
 
 async function down() {
-  await prisma.$executeRaw`TRUNCATE TABLE "User" RESTART IDENTITY CASCADE`
+  await prisma.$executeRaw`TRUNCATE TABLE "user" RESTART IDENTITY CASCADE`
+  await prisma.$executeRaw`TRUNCATE TABLE "session" RESTART IDENTITY CASCADE`
+  await prisma.$executeRaw`TRUNCATE TABLE "account" RESTART IDENTITY CASCADE`
+  await prisma.$executeRaw`TRUNCATE TABLE "verification" RESTART IDENTITY CASCADE`
   await prisma.$executeRaw`TRUNCATE TABLE "Category" RESTART IDENTITY CASCADE`
   await prisma.$executeRaw`TRUNCATE TABLE "Cart" RESTART IDENTITY CASCADE`
   await prisma.$executeRaw`TRUNCATE TABLE "CartItem" RESTART IDENTITY CASCADE`
