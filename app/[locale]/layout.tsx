@@ -38,7 +38,7 @@ export default async function RootLayout({
     <html
       lang={locale}
       suppressHydrationWarning
-      className={cn("font-sans", fontSans.variable)}
+      className={cn("bg-background font-sans", fontSans.variable)}
     >
       <head>
         <link data-rh="true" rel="icon" href="/logo.png" />

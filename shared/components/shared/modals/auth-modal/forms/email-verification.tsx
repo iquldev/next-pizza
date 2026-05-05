@@ -61,15 +61,15 @@ export const EmailVerification = () => {
       <div className="flex flex-col items-center gap-4">
         <Loader2 className="h-14 w-14 animate-spin text-primary" />
         <Title text={t("loadingTitle")} size="md" className="font-bold" />
-        <p className="text-gray-400">{t("loadingDescription")}</p>
+        <p className="text-muted-foreground">{t("loadingDescription")}</p>
       </div>
     ),
 
     success: (
       <div className="flex flex-col items-center gap-4">
-        <CheckCircle2 className="h-14 w-14 text-green-500" />
+        <CheckCircle2 className="h-14 w-14 text-success" />
         <Title text={t("successTitle")} size="md" className="font-bold" />
-        <p className="text-gray-400">{t("successDescription")}</p>
+        <p className="text-muted-foreground">{t("successDescription")}</p>
         <Button className="mt-2 h-12 w-full" onClick={() => router.push("/")}>
           {t("successButton")}
         </Button>
@@ -78,9 +78,9 @@ export const EmailVerification = () => {
 
     error: (
       <div className="flex flex-col items-center gap-4">
-        <XCircle className="h-14 w-14 text-red-500" />
+        <XCircle className="h-14 w-14 text-destructive" />
         <Title text={t("errorTitle")} size="md" className="font-bold" />
-        <p className="text-center text-gray-400">{t("errorDescription")}</p>
+        <p className="text-center text-muted-foreground">{t("errorDescription")}</p>
         {email && (
           <Button
             variant="outline"
@@ -103,9 +103,9 @@ export const EmailVerification = () => {
 
     invalid: (
       <div className="flex flex-col items-center gap-4">
-        <XCircle className="h-14 w-14 text-yellow-500" />
+        <XCircle className="h-14 w-14 text-warning" />
         <Title text={t("invalidTitle")} size="md" className="font-bold" />
-        <p className="text-center text-gray-400">{t("invalidDescription")}</p>
+        <p className="text-center text-muted-foreground">{t("invalidDescription")}</p>
         <Button
           variant="ghost"
           className="mt-2 h-12 w-full"

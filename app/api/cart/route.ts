@@ -1,5 +1,6 @@
 import { prisma } from "@/prisma/prisma-client"
 import { findOrCreateCart } from "@/shared/lib/find-or-create-cart"
+import { getUserSession } from "@/shared/lib/get-user-session"
 import { updateCartTotalAmount } from "@/shared/lib/update-cart-total-amount"
 import { CreateCartItemValues } from "@/shared/services/dto/cart.dto"
 import { NextRequest, NextResponse } from "next/server"
@@ -7,14 +8,17 @@ import { NextRequest, NextResponse } from "next/server"
 export async function GET(req: NextRequest) {
   try {
     const token = req.cookies.get("cartToken")?.value
+    const session = await getUserSession()
+    const userId = session?.user.id
 
-    if (!token) {
+    if (!token && !userId) {
       return NextResponse.json({ totalAmount: 0, items: [] })
     }
 
     const userCart = await prisma.cart.findFirst({
       where: {
-        token,
+        userId: userId || undefined,
+        token: !userId ? token : undefined,
       },
       include: {
         items: {
@@ -33,7 +37,7 @@ export async function GET(req: NextRequest) {
       },
     })
 
-    return NextResponse.json(userCart)
+    return NextResponse.json(userCart || { totalAmount: 0, items: [] })
   } catch (error) {
     console.log(error)
   }
@@ -42,12 +46,14 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   try {
     let token = req.cookies.get("cartToken")?.value
+    const session = await getUserSession()
+    const userId = session?.user.id
 
     if (!token) {
       token = crypto.randomUUID()
     }
 
-    const userCart = await findOrCreateCart(token)
+    const userCart = await findOrCreateCart(token, userId)
 
     const data = (await req.json()) as CreateCartItemValues
 
@@ -87,7 +93,7 @@ export async function POST(req: NextRequest) {
       })
     }
 
-    const updatedUserCart = await updateCartTotalAmount(token)
+    const updatedUserCart = await updateCartTotalAmount(token, userId)
 
     const resp = NextResponse.json(updatedUserCart)
     resp.cookies.set("cartToken", token)

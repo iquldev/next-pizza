@@ -19,9 +19,10 @@ type FormValues = z.infer<typeof loginSchema>
 
 interface Props {
   onSwitchType: () => void
+  closeModal: () => void
 }
 
-export const LoginForm = ({ onSwitchType }: Props) => {
+export const LoginForm = ({ onSwitchType, closeModal }: Props) => {
   const t = useTranslations("Auth")
   const form = useForm<FormValues>({
     resolver: zodResolver(loginSchema),
@@ -56,7 +57,7 @@ export const LoginForm = ({ onSwitchType }: Props) => {
       }
 
       toast.success(t("loginSuccess"))
-      window.location.reload()
+      closeModal()
     } catch (error) {
       console.error("Error logging in:", error)
       toast.error(t("error"))
@@ -69,7 +70,7 @@ export const LoginForm = ({ onSwitchType }: Props) => {
         <Title text={t("loginTitle")} size="md" className="font-bold" />
       </div>
 
-      <p className="text-gray-400">{t("loginDescription")}</p>
+      <p className="text-muted-foreground">{t("loginDescription")}</p>
 
       <FormProvider {...form}>
         <form

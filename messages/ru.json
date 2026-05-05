@@ -129,5 +129,20 @@
     "invalidTitle": "Некорректная ссылка",
     "invalidDescription": "Параметр token отсутствует. Используйте ссылку из письма",
     "invalidBack": "На главную"
+  },
+  "Orders": {
+    "title": "Мои заказы",
+    "empty": "У вас пока нет заказов",
+    "status": {
+      "PENDING": "Ожидает оплаты",
+      "SUCCEEDED": "Оплачен",
+      "CANCELLED": "Отменен"
+    },
+    "details": {
+      "items": "Товары",
+      "total": "Итого",
+      "createdAt": "Дата заказа",
+      "number": "Заказ №"
+    }
   }
 }

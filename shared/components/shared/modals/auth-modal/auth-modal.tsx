@@ -31,7 +31,7 @@ export const AuthModal = ({ open, onClose, className }: Props) => {
       <DialogContent className={cn("w-[450px] bg-background p-10", className)}>
         <DialogTitle className="sr-only">Auth Modal</DialogTitle>
         {type === "login" ? (
-          <LoginForm onSwitchType={onSwitchType} />
+          <LoginForm onSwitchType={onSwitchType} closeModal={handleClose} />
         ) : (
           <RegisterForm onSwitchType={onSwitchType} />
         )}

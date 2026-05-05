@@ -22,7 +22,6 @@ model User {
 
   cart          Cart?
   orders        Order[]
-  verificationCode VerificationCode?
 
   @@map("user")
 }
@@ -191,18 +190,6 @@ model Order {
   updatedAt DateTime @updatedAt
 }
 
-model VerificationCode {
-  id Int @id @default(autoincrement())
-
-  user   User   @relation(fields: [userId], references: [id])
-  userId String @unique
-
-  code String
-
-  createdAt DateTime @default(now())
-
-  @@unique([userId, code])
-}
 enum OrderStatus {
   PENDING
   SUCCEEDED

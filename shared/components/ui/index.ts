@@ -8,6 +8,12 @@ import { Slider } from "./slider"
 import { Popover } from "./popover"
 import { Drawer } from "./drawer"
 import { Textarea } from "./textarea"
+import {
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenu,
+  DropdownMenuItem,
+} from "./dropdown-menu"
 
 export {
   Button,
@@ -20,4 +26,8 @@ export {
   Slider,
   Popover,
   Drawer,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenu,
+  DropdownMenuItem,
 }

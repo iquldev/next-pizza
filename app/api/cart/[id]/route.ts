@@ -1,4 +1,5 @@
 import { prisma } from "@/prisma/prisma-client"
+import { getUserSession } from "@/shared/lib/get-user-session"
 import { updateCartTotalAmount } from "@/shared/lib/update-cart-total-amount"
 import { NextRequest, NextResponse } from "next/server"
 
@@ -10,8 +11,10 @@ export async function PATCH(
     const { id } = await params
     const data = (await req.json()) as { quantity: number }
     const token = req.cookies.get("cartToken")?.value
+    const session = await getUserSession()
+    const userId = session?.user.id
 
-    if (!token) {
+    if (!token && !userId) {
       return NextResponse.json(
         { error: "Cart token not found" },
         { status: 404 }
@@ -40,7 +43,7 @@ export async function PATCH(
       },
     })
 
-    const updatedUserCart = await updateCartTotalAmount(token)
+    const updatedUserCart = await updateCartTotalAmount(token || "", userId)
 
     return NextResponse.json(updatedUserCart)
   } catch (error) {
@@ -59,8 +62,10 @@ export async function DELETE(
   try {
     const { id } = await params
     const token = req.cookies.get("cartToken")?.value
+    const session = await getUserSession()
+    const userId = session?.user.id
 
-    if (!token) {
+    if (!token && !userId) {
       return NextResponse.json(
         { error: "Cart token not found" },
         { status: 404 }
@@ -86,7 +91,7 @@ export async function DELETE(
       },
     })
 
-    const updatedUserCart = await updateCartTotalAmount(token)
+    const updatedUserCart = await updateCartTotalAmount(token || "", userId)
 
     return NextResponse.json(updatedUserCart)
   } catch (error) {

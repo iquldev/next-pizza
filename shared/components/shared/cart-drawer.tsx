@@ -21,7 +21,7 @@ import { useEffect, useState } from "react"
 import { CartDrawerItem } from "./cart-drawer-item"
 import { getCartItemsDetails } from "@/shared/lib/get-cart-items-details"
 import { PizzaSize, PizzaType } from "@/shared/constants/pizza"
-import { useCartStore } from "@/shared/store/cart"
+import { useCart } from "@/shared/hooks/use-cart"
 import { AnimatePresence, motion } from "framer-motion"
 import { useTranslations } from "next-intl"
 
@@ -36,17 +36,12 @@ export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({
   const t = useTranslations("Cart")
   const commonT = useTranslations("Common")
   const {
-    fetchCartItems,
     items,
     totalAmount,
     updateItemQuantity,
     removeCartItem,
     loading,
-  } = useCartStore()
-
-  useEffect(() => {
-    fetchCartItems()
-  }, [fetchCartItems])
+  } = useCart()
 
   const [redirecting, setRedirecting] = useState(false)
 

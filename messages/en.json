@@ -129,5 +129,20 @@
     "invalidTitle": "Invalid link",
     "invalidDescription": "The token parameter is missing. Please use the link from the email",
     "invalidBack": "Go to homepage"
+  },
+  "Orders": {
+    "title": "My Orders",
+    "empty": "You have no orders yet",
+    "status": {
+      "PENDING": "Pending payment",
+      "SUCCEEDED": "Paid",
+      "CANCELLED": "Cancelled"
+    },
+    "details": {
+      "items": "Items",
+      "total": "Total",
+      "createdAt": "Order date",
+      "number": "Order #"
+    }
   }
 }

@@ -51,3 +51,5 @@ CHANGELOG.md
 .gemini/
 *.sqlite
 *.sqlite3
+
+/GEMINI.md

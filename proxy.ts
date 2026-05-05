@@ -12,7 +12,7 @@ export default async function proxy(request: NextRequest) {
     headers: await headers(),
   })
 
-  const isAuthRoute = request.nextUrl.pathname.includes("/profile")
+  const isAuthRoute = request.nextUrl.pathname.includes("/orders")
 
   if (!session && isAuthRoute) {
     return NextResponse.redirect(new URL("/", request.url))

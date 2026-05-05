@@ -39,7 +39,11 @@ export async function POST(req: NextRequest) {
 
     if (event.type === "checkout.session.completed") {
       const order = await prisma.order.update({
-        where: { id: orderId, status: OrderStatus.PENDING },
+        where: { 
+          id: orderId, 
+          status: OrderStatus.PENDING,
+          paymentId: session.id,
+        },
         data: { status: OrderStatus.SUCCEEDED },
       })
 

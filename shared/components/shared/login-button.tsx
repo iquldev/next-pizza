@@ -1,45 +1,65 @@
 "use client"
 
-import { LogOut, User } from "lucide-react"
-import { Button, Popover } from "../ui"
+import {
+  Button,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenu,
+  DropdownMenuItem,
+} from "../ui"
 import { useTranslations } from "next-intl"
 import { authClient } from "@/shared/lib"
 import { useState } from "react"
 import { AuthModal } from "./modals/auth-modal/auth-modal"
-import { PopoverContent, PopoverTrigger } from "../ui/popover"
+import { Link } from "@/i18n/routing"
+import { CircleUser, LogOut, User } from "lucide-react"
+import { redirect } from "next/navigation"
 
 export const LoginButton = () => {
   const [openAuthModal, setOpenAuthModal] = useState(false)
   const t = useTranslations("Header")
   const tAuth = useTranslations("Auth")
+  const tOrders = useTranslations("Orders")
 
   const { data, isPending } = authClient.useSession()
 
   const onClickLogout = async () => {
     await authClient.signOut()
-    window.location.reload()
+    redirect("/")
   }
 
   if (data?.user) {
     return (
-      <Popover>
-        <PopoverTrigger asChild>
-          <Button variant="default" className="flex items-center gap-1">
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button
+            variant="secondary"
+            className="flex items-center gap-1"
+            loading={isPending}
+          >
             <User size={16} />
             {t("profile")}
           </Button>
-        </PopoverTrigger>
-        <PopoverContent className="w-48 p-0">
-          <Button
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuItem asChild>
+            <Link
+              href="/orders"
+              className="flex w-full cursor-pointer items-center gap-2 px-4 py-2"
+            >
+              <CircleUser size={16} />
+              {tOrders("title")}
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem
             onClick={onClickLogout}
-            variant="ghost"
-            className="flex w-full items-center justify-start gap-2 px-4 py-6 text-red-500 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-950"
+            className="flex w-full cursor-pointer items-center gap-2 px-4 py-2 text-destructive hover:text-destructive"
           >
             <LogOut size={16} />
             {tAuth("logout")}
-          </Button>
-        </PopoverContent>
-      </Popover>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
     )
   }
 

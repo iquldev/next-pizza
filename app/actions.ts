@@ -6,6 +6,7 @@ import { OrderStatus } from "@prisma/client"
 import { cookies } from "next/headers"
 import { createPayment } from "@/shared/lib/create-payment"
 import { sendEmail } from "@/shared/lib/send-email"
+import { getUserSession } from "@/shared/lib/get-user-session"
 
 export async function createOrder(data: CheckoutFormValues) {
   try {
@@ -43,9 +44,12 @@ export async function createOrder(data: CheckoutFormValues) {
       throw new Error("Cart is empty")
     }
 
+    const session = await getUserSession()
+
     const order = await prisma.order.create({
       data: {
         token,
+        userId: session?.user.id,
         fullName: `${data.firstName} ${data.lastName}`,
         email: data.email,
         phone: data.phone,

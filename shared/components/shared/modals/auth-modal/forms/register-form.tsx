@@ -104,13 +104,13 @@ export const RegisterForm = ({ onSwitchType }: Props) => {
           <Mail className="h-8 w-8 text-primary" />
         </div>
         <Title text={t("verificationTitle")} size="md" className="font-bold" />
-        <p className="text-gray-400">
+        <p className="text-muted-foreground">
           {t("verificationDescription")}{" "}
           <span className="font-medium text-foreground">
             {verificationEmail}
           </span>
         </p>
-        <p className="text-sm text-gray-400">{t("verificationSpam")}</p>
+        <p className="text-sm text-muted-foreground">{t("verificationSpam")}</p>
         <Button
           loading={isResending}
           variant="outline"
@@ -137,7 +137,7 @@ export const RegisterForm = ({ onSwitchType }: Props) => {
   return (
     <div className="flex flex-col gap-5">
       <Title text={t("registerTitle")} size="md" className="font-bold" />
-      <p className="text-gray-400">{t("registerDescription")}</p>
+      <p className="text-muted-foreground">{t("registerDescription")}</p>
       <FormProvider {...form}>
         <form
           className="flex flex-col gap-4"
