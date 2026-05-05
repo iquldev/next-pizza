@@ -10,7 +10,7 @@ import { useMemo } from "react"
 import { Button } from "../ui"
 import { motion, AnimatePresence } from "framer-motion"
 import { useTranslations } from "next-intl"
-import { Ingredient } from "@prisma/client"
+import { Ingredient } from "@/prisma/generated/prisma-client"
 
 interface Props {
   className?: string

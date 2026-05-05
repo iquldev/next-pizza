@@ -1,4 +1,4 @@
-import { Ingredient } from "@prisma/client"
+import { Ingredient } from "@/prisma/generated/prisma-client"
 import { axiosInstance } from "./instance"
 import { apiRoutes } from "./routes"
 

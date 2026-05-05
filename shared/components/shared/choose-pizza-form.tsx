@@ -4,13 +4,13 @@ import { cn, usePizzaDetails } from "@/shared/lib"
 import { Button } from "../ui"
 import { Title } from "./title"
 import { ProductImage } from "./product-image"
-import { Ingredient, ProductItem } from "@prisma/client"
 import { GroupVariants } from "./group-variants"
 import { PizzaSize, PizzaType } from "@/shared/constants/pizza"
 import { IngredientItem } from "./ingredient-item"
 import { usePizzaOptions } from "@/shared/hooks"
 import { motion } from "framer-motion"
 import { useTranslations } from "next-intl"
+import { Ingredient, ProductItem } from "@/prisma/generated/prisma-client"
 
 interface Props {
   imageUrl: string

@@ -2,7 +2,7 @@ import { cn } from "@/shared/lib"
 import { Container } from "./container"
 import { Categories } from "./categories"
 import { SortPopup } from "./sort-popup"
-import { Category } from "@prisma/client"
+import { Category } from "@/prisma/generated/prisma-client"
 
 interface Props {
   className?: string

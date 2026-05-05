@@ -5,7 +5,7 @@ import {
   PizzaSize,
   PizzaType,
 } from "../constants/pizza"
-import { ProductItem } from "@prisma/client"
+import { ProductItem } from "@/prisma/generated/prisma-client"
 
 export const useAvailablePizzaVariants = (
   type: PizzaType,

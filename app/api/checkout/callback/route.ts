@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import Stripe from "stripe"
 import { prisma } from "@/prisma/prisma-client"
-import { OrderStatus } from "@prisma/client"
+import { OrderStatus } from "@/prisma/generated/prisma-client"
 import { sendEmail } from "@/shared/lib/send-email"
 import { CartItemDTO } from "@/shared/services/dto/cart.dto"
 
@@ -39,8 +39,8 @@ export async function POST(req: NextRequest) {
 
     if (event.type === "checkout.session.completed") {
       const order = await prisma.order.update({
-        where: { 
-          id: orderId, 
+        where: {
+          id: orderId,
           status: OrderStatus.PENDING,
           paymentId: session.id,
         },

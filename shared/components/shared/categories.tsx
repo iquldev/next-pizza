@@ -2,7 +2,7 @@
 
 import { cn } from "@/shared/lib"
 import { useCategoryStore } from "@/shared/store/category"
-import { Category } from "@prisma/client"
+import { Category } from "@/prisma/generated/prisma-client"
 
 interface Props {
   className?: string

@@ -1,6 +1,6 @@
 import { useMemo } from "react"
 import { calcTotalPizzaPrice } from "./calc-total-pizza-price"
-import { Ingredient, ProductItem } from "@prisma/client"
+import { Ingredient, ProductItem } from "@/prisma/generated/prisma-client"
 import { PizzaSize, PizzaType } from "../constants/pizza"
 import { useTranslations } from "next-intl"
 
