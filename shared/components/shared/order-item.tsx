@@ -1,7 +1,11 @@
-import React from "react"
 import { cn } from "@/shared/lib/utils"
-import { OrderStatus } from "@prisma/client"
 import { useTranslations } from "next-intl"
+
+export enum OrderStatus {
+  PENDING = "PENDING",
+  SUCCEEDED = "SUCCEEDED",
+  CANCELLED = "CANCELLED",
+}
 
 interface Props {
   id: number
@@ -12,14 +16,14 @@ interface Props {
   className?: string
 }
 
-export const OrderItem: React.FC<Props> = ({
+export const OrderItem = ({
   id,
   status,
   createdAt,
   totalAmount,
   items,
   className,
-}) => {
+}: Props) => {
   const t = useTranslations("Orders")
 
   return (
