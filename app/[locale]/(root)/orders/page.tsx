@@ -5,6 +5,7 @@ import { getTranslations } from "next-intl/server"
 import { redirect } from "next/navigation"
 import Image from "next/image"
 import { cookies } from "next/headers"
+import { OrderStatus } from "@/shared/constants/order-status"
 
 export default async function OrdersPage() {
   const session = await getUserSession()
@@ -19,10 +20,7 @@ export default async function OrdersPage() {
 
   const orders = await prisma.order.findMany({
     where: {
-      OR: [
-        { userId: session.user.id },
-        { token: token },
-      ],
+      OR: [{ userId: session.user.id }, { token: token }],
     },
     orderBy: {
       createdAt: "desc",
@@ -39,7 +37,7 @@ export default async function OrdersPage() {
             <OrderItem
               key={order.id}
               id={order.id}
-              status={order.status}
+              status={order.status as unknown as OrderStatus}
               createdAt={order.createdAt}
               totalAmount={order.totalAmount}
               items={JSON.parse(order.items as string)}
@@ -60,4 +58,3 @@ export default async function OrdersPage() {
     </Container>
   )
 }
-

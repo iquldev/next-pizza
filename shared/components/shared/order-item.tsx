@@ -1,11 +1,6 @@
 import { cn } from "@/shared/lib/utils"
 import { useTranslations } from "next-intl"
-
-export enum OrderStatus {
-  PENDING = "PENDING",
-  SUCCEEDED = "SUCCEEDED",
-  CANCELLED = "CANCELLED",
-}
+import { OrderStatus } from "@/shared/constants/order-status"
 
 interface Props {
   id: number
